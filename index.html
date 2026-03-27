@@ -48,7 +48,7 @@ header {
 header h1 {
   font-family: 'Fraunces', serif;
   font-weight: 900;
-  font-size: clamp(32px, 5vw, 56px);
+  font-size: clamp(44px, 6vw, 72px);
   text-transform: uppercase;
   letter-spacing: -1px;
   color: #FFFFFF;
@@ -61,7 +61,7 @@ header h1 {
   font-weight: 400;
   font-size: 20px;
   color: rgba(255,255,255,0.75);
-  margin-bottom: 32px;
+  margin-bottom: 16px;
 }
 
 .header-meta {
@@ -70,6 +70,7 @@ header h1 {
   justify-content: center;
   gap: 0;
   padding-top: 28px;
+  margin-top: 24px;
   border-top: 1px solid rgba(255,255,255,0.2);
 }
 
@@ -98,92 +99,26 @@ header h1 {
   color: #FFFFFF;
 }
 
-/* ─── OVERVIEW SECTION ─── */
-.overview-wrap {
-  background: var(--color-surface);
-  border-bottom: 2px solid var(--color-bg);
-  padding: 40px 60px;
-}
-
-.overview-inner {
-  max-width: 860px;
-  margin: 0 auto;
-}
-
-.overview-eyebrow {
+/* ─── INFO BUTTON ─── */
+.info-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.3);
+  color: #fff;
   font-family: 'Quick', sans-serif;
   font-size: 10px;
   text-transform: uppercase;
-  letter-spacing: 3px;
-  color: var(--color-coral);
-  margin-bottom: 12px;
-  text-align: center;
+  letter-spacing: 2px;
+  padding: 10px 18px;
+  border-radius: 50px;
+  cursor: pointer;
+  margin-top: 0;
+  transition: background 0.2s;
 }
-
-.overview-heading {
-  font-family: 'Fraunces', serif;
-  font-weight: 900;
-  font-size: 28px;
-  text-transform: uppercase;
-  letter-spacing: -1px;
-  color: var(--color-primary);
-  line-height: 1.0;
-  margin-bottom: 16px;
-  text-align: center;
-}
-
-.overview-body {
-  font-family: 'Nunito', sans-serif;
-  font-size: 15px;
-  color: var(--color-body-text);
-  line-height: 1.8;
-  text-align: center;
-  max-width: 680px;
-  margin: 0 auto 32px;
-}
-
-.overview-cards {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  margin-top: 28px;
-}
-
-.overview-card {
-  background: var(--color-bg);
-  border-radius: 14px;
-  padding: 22px 24px;
-}
-
-.oc-label {
-  font-family: 'Quick', sans-serif;
-  font-size: 9px;
-  text-transform: uppercase;
-  letter-spacing: 3px;
-  color: var(--color-coral);
-  margin-bottom: 8px;
-}
-
-.oc-title {
-  font-family: 'Fraunces', serif;
-  font-weight: 400;
-  font-size: 16px;
-  color: var(--color-primary);
-  margin-bottom: 6px;
-  line-height: 1.3;
-}
-
-.oc-body {
-  font-family: 'Nunito', sans-serif;
-  font-size: 13px;
-  color: var(--color-body-text);
-  line-height: 1.65;
-}
-
-@media (max-width: 720px) {
-  .overview-cards { grid-template-columns: 1fr; }
-  .overview-wrap { padding-left: 20px; padding-right: 20px; }
-}
+.info-btn:hover { background: rgba(255,255,255,0.25); }
+.info-btn svg { width: 16px; height: 16px; flex-shrink: 0; }
 
 /* ─── ROADMAP STRIP ─── */
 .roadmap-wrap {
@@ -708,11 +643,133 @@ footer {
   color: rgba(255,255,255,0.5);
 }
 
+/* ─── INFO BUTTON ─── */
+.info-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.3);
+  color: #fff;
+  font-family: 'Quick', sans-serif;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  padding: 8px 16px;
+  border-radius: 50px;
+  cursor: pointer;
+  margin-bottom: 28px;
+  transition: background 0.2s;
+}
+.info-btn:hover { background: rgba(255,255,255,0.25); }
+.info-btn svg { width: 15px; height: 15px; flex-shrink: 0; }
+
+/* ─── INFO MODAL OVERLAY ─── */
+.info-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(100,118,124,0.45);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+.info-overlay.open { display: flex; }
+
+.info-modal {
+  background: var(--color-surface);
+  border-radius: 20px;
+  padding: 40px 44px;
+  max-width: 600px;
+  width: 100%;
+  position: relative;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.info-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--color-bg);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-primary);
+  transition: background 0.2s;
+}
+.info-close:hover { background: #e4eaec; }
+.info-close svg { width: 13px; height: 13px; }
+
+.info-eyebrow {
+  font-family: 'Quick', sans-serif;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: var(--color-coral);
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.info-heading {
+  font-family: 'Fraunces', serif;
+  font-weight: 400 !important;
+  font-size: 26px;
+  color: var(--color-primary);
+  line-height: 1.2;
+  margin-bottom: 16px;
+  text-align: center;
+  text-transform: none !important;
+  letter-spacing: normal !important;
+}
+
+.info-body {
+  font-family: 'Nunito', sans-serif;
+  font-size: 15px;
+  color: var(--color-body-text);
+  line-height: 1.8;
+  margin-bottom: 8px;
+  text-align: left;
+}
+
+.info-divider {
+  height: 1px;
+  background: var(--color-bg);
+  margin: 24px 0;
+}
+
+.info-sublabel {
+  display: block;
+  font-family: 'Quick', sans-serif;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: var(--color-coral);
+  margin-bottom: 6px;
+  text-align: center;
+}
+
+.info-card-title {
+  font-family: 'Fraunces', serif;
+  font-weight: 400;
+  font-size: 20px;
+  color: var(--color-primary);
+  margin-bottom: 12px;
+  line-height: 1.2;
+}
+
 @media (max-width: 720px) {
   header, .roadmap-wrap, nav, main, footer { padding-left: 20px; padding-right: 20px; }
   .roadmap-step-label { font-size: 8px; max-width: 60px; }
   .phase-header { padding: 16px 20px; }
   .task-group { padding: 20px; }
+  .info-modal { padding: 28px 24px; }
 }
 </style>
 </head>
@@ -723,6 +780,10 @@ footer {
   <div class="header-eyebrow">Simple Creator Co. — System Architecture</div>
   <h1>30-Day IG Challenge</h1>
   <div class="header-sub">Automation Build Plan</div>
+  <button class="info-btn" onclick="toggleInfo()" title="What are we building?">
+    <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="10" cy="10" r="9" stroke="currentColor" stroke-width="1.5"/><path d="M10 9v5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><circle cx="10" cy="6.5" r="0.75" fill="currentColor"/></svg>
+    What are we building?
+  </button>
   <div class="header-meta">
     <div class="meta-item">
       <span class="meta-label">Offer</span>
@@ -743,21 +804,18 @@ footer {
   </div>
 </header>
 
-<!-- ─── OVERVIEW ─── -->
-<div class="overview-wrap">
-  <div class="overview-inner">
-    <div class="overview-eyebrow">What We're Building</div>
-    <h2 class="overview-heading">The Goal</h2>
-    <p class="overview-body">The 30-Day IG Challenge runs as a recurring cohort product twice a month — on the 1st and the 15th. The goal of this build is to wire up the full system so that from the moment someone buys, everything that needs to happen just happens: they get course access, land in the roster, receive a confirmation email, get grouped into a pod with 6–9 other people, and receive their Telegram invite — all without you touching anything except a 10-minute sanity check before each cohort opens.</p>
-
-    <div class="overview-cards" style="grid-template-columns: 1fr;">
-      <div class="overview-card">
-        <div class="oc-label">How It Works</div>
-        <div class="oc-title">Purchase triggers everything downstream</div>
-        <div class="oc-body">A single SamCart purchase fires a Zapier zap that grants Kajabi access, logs the buyer to a Google Sheet, and tags them in Flodesk. On cutoff dates, buyers get grouped into pods automatically. Cowork then creates their Telegram group, schedules 5 check-in messages, and sends their welcome email — all from a saved task brief you trigger once.</div>
-        <div class="oc-body" style="margin-top: 12px;">Once the system is built, your only recurring task is a 10-minute check before each cohort opens to verify everything looks right. After that, the 30-day challenge runs itself — two cohorts a month, zero ongoing manual work per buyer.</div>
-      </div>
-    </div>
+<!-- ─── INFO MODAL ─── -->
+<div class="info-overlay" id="infoOverlay" onclick="handleOverlayClick(event)">
+  <div class="info-modal">
+    <button class="info-close" onclick="toggleInfo()">
+      <svg viewBox="0 0 14 14" fill="none"><path d="M1 1l12 12M13 1L1 13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg>
+    </button>
+    <div class="info-eyebrow">What We're Building</div>
+    <p class="info-heading">The Goal</p>
+    <p class="info-body">The 30-Day IG Challenge runs as a recurring cohort product twice a month — on the 1st and the 15th. The goal of this build is to wire up the full system so that from the moment someone buys, everything that needs to happen just happens: they get course access, land in the roster, receive a confirmation email, get grouped into a pod with 6–9 other people, and receive their Telegram invite — without you touching anything.</p>
+    <div class="info-heading">How It Works</div>
+    <p class="info-body">A single SamCart purchase fires a Zapier zap that grants Kajabi access, logs the buyer to a Google Sheet, and tags them in Flodesk. On cutoff dates, buyers get grouped into pods automatically. Cowork then creates their Telegram group, schedules 5 check-in messages, and sends their welcome email — all from a saved task brief you trigger once.</p>
+    <p class="info-body">Once the system is built, your only recurring task is a 10-minute check before each cohort opens to verify everything looks right. After that, the 30-day challenge runs itself — two cohorts a month, zero ongoing manual work per buyer.</p>
   </div>
 </div>
 
@@ -1411,6 +1469,23 @@ footer {
 </footer>
 
 <script>
+// ─── INFO MODAL ───
+function toggleInfo() {
+  document.getElementById('infoOverlay').classList.toggle('open');
+}
+function handleOverlayClick(e) {
+  if (e.target === document.getElementById('infoOverlay')) toggleInfo();
+}
+
+// ─── INFO MODAL ───
+function toggleInfo() {
+  document.getElementById('infoOverlay').classList.toggle('open');
+}
+
+function handleOverlayClick(e) {
+  if (e.target === document.getElementById('infoOverlay')) toggleInfo();
+}
+
 // ─── STORAGE KEY PREFIX ───
 const KEY = 'igchallenge_';
 
