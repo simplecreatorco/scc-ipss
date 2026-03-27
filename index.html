@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>30-Day IG Challenge — Build Plan</title>
+<title>250-Hook Bank — Simple Creator Co.</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,900&family=Nunito:wght@400;600;700&display=swap');
 @import url('https://fonts.cdnfonts.com/css/quick');
@@ -20,1631 +20,1285 @@
   --color-body-text: #555555;
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
   background: var(--color-bg);
   font-family: 'Nunito', sans-serif;
   color: var(--color-body-text);
   line-height: 1.75;
+  min-height: 100vh;
 }
 
-/* ─── HEADER ─── */
-header {
-  background: var(--color-primary);
-  padding: 52px 60px 44px;
-  text-align: center;
+/* ── LAYOUT ─────────────────────────────────────────── */
+.page-wrap {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 48px 24px 80px;
+}
+
+/* ── HEADER ─────────────────────────────────────────── */
+.header {
+  background: var(--color-surface);
+  border-radius: 20px;
+  padding: 44px 48px 40px;
+  margin-bottom: 24px;
 }
 
 .header-eyebrow {
   font-family: 'Quick', sans-serif;
-  font-size: 13px;
+  font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 3px;
-  color: rgba(255,255,255,0.65);
-  margin-bottom: 16px;
+  color: var(--color-coral);
+  margin-bottom: 12px;
 }
 
-header h1 {
+.header-title {
   font-family: 'Fraunces', serif;
   font-weight: 900;
-  font-size: clamp(48px, 6vw, 68px);
+  font-size: clamp(38px, 6vw, 58px);
   text-transform: uppercase;
+  color: var(--color-primary);
   letter-spacing: -1px;
-  color: #FFFFFF;
   line-height: 1.0;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
 }
 
 .header-sub {
   font-family: 'Fraunces', serif;
   font-weight: 400;
-  font-size: 22px;
-  color: rgba(255,255,255,0.75);
-  margin-bottom: 22px;
-}
-
-.header-meta {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0;
-  padding-top: 28px;
-  margin-top: 24px;
-  border-top: 1px solid rgba(255,255,255,0.2);
-}
-
-.meta-item {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-  padding-right: 36px;
-  margin-right: 36px;
-  border-right: 1px solid rgba(255,255,255,0.2);
-}
-.meta-item:last-child { border-right: none; }
-
-.meta-label {
-  font-family: 'Quick', sans-serif;
-  font-size: 9px;
-  text-transform: uppercase;
-  letter-spacing: 3px;
-  color: rgba(255,255,255,0.5);
-}
-
-.meta-value {
-  font-family: 'Nunito', sans-serif;
-  font-size: 14px;
-  font-weight: 600;
-  color: #FFFFFF;
-}
-
-/* ─── INFO BUTTON ─── */
-.info-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: rgba(255,255,255,0.15);
-  border: 1px solid rgba(255,255,255,0.3);
-  color: #fff;
-  font-family: 'Quick', sans-serif;
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  padding: 12px 22px;
-  border-radius: 50px;
-  cursor: pointer;
-  margin-top: 0;
-  transition: background 0.2s;
-}
-.info-btn:hover { background: rgba(255,255,255,0.25); }
-.info-btn svg { width: 17px; height: 17px; flex-shrink: 0; }
-
-/* ─── ROADMAP STRIP ─── */
-.roadmap-wrap {
-  background: var(--color-surface);
-  border-bottom: 2px solid var(--color-bg);
-  padding: 32px 60px;
-}
-
-.roadmap-label {
-  font-family: 'Quick', sans-serif;
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: 3px;
-  color: var(--color-coral);
+  font-size: 20px;
+  color: var(--color-primary);
   margin-bottom: 20px;
 }
 
-.roadmap-track {
-  display: flex;
-  align-items: flex-start;
-  gap: 0;
-  position: relative;
-}
-
-.roadmap-track::before {
-  content: '';
-  position: absolute;
-  top: 18px;
-  left: 18px;
-  right: 18px;
-  height: 2px;
-  background: var(--color-bg);
-  z-index: 0;
-}
-
-.roadmap-step {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  position: relative;
-  z-index: 1;
-  cursor: pointer;
-}
-
-.roadmap-dot {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: var(--color-bg);
-  border: 2px solid var(--color-bg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.25s;
-  flex-shrink: 0;
-}
-
-.roadmap-dot svg {
-  width: 14px;
-  height: 14px;
-  display: none;
-}
-
-.roadmap-step.done .roadmap-dot {
-  background: var(--color-sage);
-  border-color: var(--color-sage);
-}
-
-.roadmap-step.done .roadmap-dot svg { display: block; }
-
-.roadmap-step.done .roadmap-dot .dot-num { display: none; }
-
-.dot-num {
-  font-family: 'Fraunces', serif;
-  font-weight: 900;
-  font-size: 13px;
-  color: var(--color-primary);
-  opacity: 0.5;
-}
-
-.roadmap-step.active .roadmap-dot {
-  background: var(--color-primary);
-  border-color: var(--color-primary);
-}
-
-.roadmap-step.active .dot-num {
-  color: #fff;
-  opacity: 1;
-}
-
-.roadmap-step-label {
-  font-family: 'Quick', sans-serif;
-  font-size: 9px;
-  text-transform: uppercase;
-  letter-spacing: 2px;
+.header-desc {
+  font-size: 15px;
   color: var(--color-body-text);
-  opacity: 0.5;
-  text-align: center;
-  line-height: 1.4;
-  max-width: 90px;
+  max-width: 600px;
+  line-height: 1.75;
 }
 
-.roadmap-step.active .roadmap-step-label {
-  color: var(--color-primary);
-  opacity: 1;
-}
-
-.roadmap-step.done .roadmap-step-label {
-  color: var(--color-primary);
-  opacity: 0.7;
-}
-
-/* progress bar under track */
-.roadmap-progress-bar {
-  margin-top: 20px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.progress-track {
-  flex: 1;
-  height: 6px;
-  background: var(--color-bg);
-  border-radius: 50px;
-  overflow: hidden;
-}
-
-.progress-fill {
-  height: 100%;
-  background: var(--color-sage);
-  border-radius: 50px;
-  transition: width 0.4s ease;
-}
-
-.progress-text {
-  font-family: 'Quick', sans-serif;
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  color: var(--color-primary);
-  white-space: nowrap;
-}
-
-/* nav removed */
-
-/* ─── MAIN ─── */
-main {
-  max-width: 980px;
-  margin: 0 auto;
-  padding: 48px 60px 80px;
-}
-
-/* ─── SECTION ACCORDION ─── */
-.phase-block {
-  margin-bottom: 16px;
-}
-
-.phase-header {
+/* ── HOW TO USE ─────────────────────────────────────── */
+.how-to-use {
   background: var(--color-surface);
-  border-radius: 16px;
-  padding: 20px 28px;
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  cursor: pointer;
-  user-select: none;
-  transition: background 0.2s;
+  border-radius: 20px;
+  padding: 36px 48px;
+  margin-bottom: 24px;
 }
 
-.phase-header:hover { background: #f8f8f8; }
-
-.phase-block.open .phase-header {
-  border-radius: 16px 16px 0 0;
-  background: var(--color-surface);
-}
-
-.phase-num {
-  font-family: 'Fraunces', serif;
-  font-weight: 900;
-  font-size: 28px;
-  color: var(--color-blush);
-  line-height: 1;
-  flex-shrink: 0;
-  width: 36px;
-  text-align: center;
-}
-
-.phase-block.done .phase-num { color: var(--color-sage); }
-.phase-block.active .phase-num { color: var(--color-primary); }
-
-.phase-header-text {
-  flex: 1;
-}
-
-.phase-eyebrow {
+.section-label {
   font-family: 'Quick', sans-serif;
-  font-size: 9px;
+  font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 3px;
   color: var(--color-coral);
-  margin-bottom: 2px;
+  margin-bottom: 16px;
 }
 
-.phase-title {
-  font-family: 'Fraunces', serif;
-  font-weight: 400;
-  font-size: 20px;
-  color: var(--color-primary);
-  line-height: 1.2;
-}
-
-.phase-progress {
+.htu-toggle {
   display: flex;
   align-items: center;
-  gap: 10px;
-  flex-shrink: 0;
+  justify-content: space-between;
+  cursor: pointer;
+  user-select: none;
 }
 
-.phase-count {
-  font-family: 'Quick', sans-serif;
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  color: var(--color-body-text);
-  opacity: 0.6;
-}
-
-.phase-chevron {
-  width: 20px;
-  height: 20px;
+.htu-heading {
+  font-family: 'Fraunces', serif;
+  font-weight: 400;
+  font-size: 22px;
   color: var(--color-primary);
-  opacity: 0.4;
+}
+
+.htu-arrow {
+  font-size: 20px;
+  color: var(--color-primary);
   transition: transform 0.25s;
   flex-shrink: 0;
 }
 
-.phase-block.open .phase-chevron { transform: rotate(180deg); opacity: 0.7; }
+.htu-arrow.open { transform: rotate(180deg); }
 
-.phase-badge {
-  font-family: 'Quick', sans-serif;
-  font-size: 9px;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  padding: 4px 12px;
-  border-radius: 50px;
-  flex-shrink: 0;
+.htu-body {
+  display: none;
+  margin-top: 20px;
 }
 
-.badge-done { background: var(--color-sage); color: #2D7A72; }
-.badge-active { background: var(--color-primary); color: #fff; }
-.badge-todo { background: var(--color-bg); color: var(--color-primary); opacity: 0.7; }
+.htu-body.open { display: block; }
 
-/* ─── DONE STATE — visible but clearly receded ─── */
-.phase-block.done .phase-header {
-  background: #E4EAEC;
-  opacity: 1;
-}
-.phase-block.done .phase-header:hover {
-  background: #dce4e7;
-}
-.phase-block.done.open .phase-header {
-  border-radius: 16px 16px 0 0;
-}
-.phase-block.done .phase-body {
-  background: #edf1f3;
-  border-top: 1px solid #d8e0e3;
-}
-.phase-block.done .phase-eyebrow {
-  color: #9eaaad;
-  opacity: 1;
-}
-.phase-block.done .phase-title {
-  color: #9eaaad;
-  opacity: 1;
-}
-.phase-block.done .phase-num {
-  color: #b8c4c7;
-}
-.phase-block.done .phase-chevron { opacity: 0.3; }
-/* keep green elements fully visible on done cards */
-.phase-block.done .badge-done { opacity: 1; }
-.phase-block.done .phase-inline-fill { opacity: 1; }
-.phase-block.done .phase-inline-label { color: var(--color-primary); opacity: 0.6; }
-
-/* ─── INLINE PHASE PROGRESS BAR ─── */
-.phase-inline-progress {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: 6px;
-}
-.phase-inline-track {
-  flex: 1;
-  height: 4px;
-  background: var(--color-bg);
-  border-radius: 50px;
-  overflow: hidden;
-  max-width: 160px;
-}
-.phase-inline-fill {
-  height: 100%;
-  background: var(--color-sage);
-  border-radius: 50px;
-  transition: width 0.4s ease;
-  width: 0%;
-}
-.phase-block.done .phase-inline-fill { background: var(--color-sage); }
-.phase-block.active .phase-inline-fill { background: var(--color-primary); opacity: 0.6; }
-.phase-inline-label {
-  font-family: 'Quick', sans-serif;
-  font-size: 9px;
-  text-transform: uppercase;
-  letter-spacing: 2px;
+.htu-intro {
+  font-size: 15px;
   color: var(--color-body-text);
-  opacity: 0.5;
+  margin-bottom: 20px;
+  line-height: 1.75;
+}
+
+.bracket-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.bracket-item {
+  background: var(--color-bg);
+  border-radius: 12px;
+  padding: 16px 20px;
+}
+
+.bracket-key {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--color-primary);
+  margin-bottom: 4px;
+}
+
+.bracket-desc {
+  font-size: 13px;
+  color: var(--color-body-text);
+  line-height: 1.6;
+}
+
+.htu-rule {
+  margin-top: 20px;
+  background: var(--color-blush);
+  border-radius: 12px;
+  padding: 16px 20px;
+  font-size: 14px;
+  color: var(--color-body-text);
+}
+
+.htu-rule strong {
+  color: var(--color-coral);
+  font-weight: 700;
+}
+
+/* ── CONTROLS ───────────────────────────────────────── */
+.controls {
+  background: var(--color-surface);
+  border-radius: 20px;
+  padding: 28px 32px;
+  margin-bottom: 20px;
+}
+
+.controls-top {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.btn-shuffle {
+  background: var(--color-yellow);
+  color: #fff;
+  font-family: 'Quick', sans-serif;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  padding: 13px 28px;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: opacity 0.2s;
+}
+
+.btn-shuffle:hover { opacity: 0.88; }
+
+/* ── TABS ────────────────────────────────────────────── */
+.tabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.tab-btn {
+  font-family: 'Quick', sans-serif;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  padding: 10px 20px;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  background: var(--color-bg);
+  color: var(--color-body-text);
   white-space: nowrap;
 }
 
-/* ─── PHASE BODY ─── */
-.phase-body {
-  display: none;
-  background: var(--color-surface);
-  border-radius: 0 0 16px 16px;
-  border-top: 1px solid var(--color-bg);
-  overflow: hidden;
+.tab-btn:hover { background: #e5e5e5; }
+
+.tab-btn.active {
+  background: var(--color-primary);
+  color: #fff;
 }
 
-.phase-block.open .phase-body { display: block; }
-
-/* ─── TASK GROUPS ─── */
-.task-group {
-  padding: 28px 32px;
-  border-bottom: 1px solid var(--color-bg);
-}
-
-.task-group:last-child { border-bottom: none; }
-
-.task-group-label {
+/* ── COUNT BAR ──────────────────────────────────────── */
+.count-bar {
   font-family: 'Quick', sans-serif;
-  font-size: 10px;
+  font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 3px;
   color: var(--color-coral);
   margin-bottom: 16px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  padding: 0 4px;
 }
 
-.tg-platform {
-  background: var(--color-bg);
-  color: var(--color-primary);
-  padding: 2px 10px;
-  border-radius: 50px;
-  font-size: 9px;
+/* ── HOOK GRID ──────────────────────────────────────── */
+.hook-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 32px;
 }
 
-/* platform-specific tag colors */
-.tg-zapier   { background: #FFF0E8; color: #C4622D; }
-.tg-sheets   { background: #E8F5E8; color: #2D7A3A; }
-.tg-flodesk  { background: #F5E8F5; color: #7A2D8B; }
-.tg-telegram { background: #E8F0FF; color: #2D5AC4; }
-.tg-kajabi   { background: #FFF5E0; color: #B8860B; }
-.tg-samcart  { background: #FFE8E8; color: #C42D2D; }
-.tg-cowork   { background: var(--color-mist); color: #2D7A72; }
-.tg-manual   { background: var(--color-blush); color: #8B4F47; }
-
-/* ─── TASK ITEMS ─── */
-.task-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 14px;
-  padding: 10px 0;
-  border-bottom: 1px solid var(--color-bg);
+@media (max-width: 640px) {
+  .hook-grid { grid-template-columns: 1fr; }
 }
 
-.task-item:last-child { border-bottom: none; }
-
-.task-item.completed .task-text {
-  text-decoration: line-through;
-  opacity: 0.45;
-}
-
-/* custom checkbox */
-.task-cb {
-  appearance: none;
-  -webkit-appearance: none;
-  width: 20px;
-  height: 20px;
-  border-radius: 6px;
-  border: 2px solid var(--color-sage);
+/* ── HOOK CARD ──────────────────────────────────────── */
+.hook-card {
   background: var(--color-surface);
-  cursor: pointer;
-  flex-shrink: 0;
-  margin-top: 2px;
-  transition: all 0.15s;
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: opacity 0.2s;
   position: relative;
 }
 
-.task-cb:checked {
-  background: var(--color-sage);
-  border-color: var(--color-sage);
+.hook-card.is-used {
+  opacity: 0.5;
 }
 
-.task-cb:checked::after {
-  content: '';
-  position: absolute;
-  top: 2px; left: 5px;
-  width: 6px; height: 10px;
-  border: 2px solid #2D7A72;
-  border-top: none;
-  border-left: none;
-  transform: rotate(45deg);
-}
-
-.task-text {
-  font-size: 15px;
-  color: var(--color-body-text);
-  line-height: 1.6;
-  flex: 1;
-  transition: all 0.2s;
-}
-
-.task-note {
-  font-size: 13px;
-  color: var(--color-body-text);
-  opacity: 0.6;
-  margin-top: 3px;
-  line-height: 1.5;
-}
-
-code {
-  font-family: 'Courier New', monospace;
-  font-size: 12px;
-  background: var(--color-bg);
-  color: var(--color-primary);
-  padding: 1px 6px;
-  border-radius: 4px;
-}
-
-.note-box {
-  background: #FFFBF0;
-  border-left: 3px solid var(--color-yellow);
-  border-radius: 0 8px 8px 0;
-  padding: 14px 18px;
-  margin: 12px 0 4px;
-  font-size: 13px;
-  color: var(--color-body-text);
-  line-height: 1.7;
-}
-
-.note-label {
-  font-family: 'Quick', sans-serif;
-  font-size: 9px;
-  text-transform: uppercase;
-  letter-spacing: 3px;
-  color: var(--color-yellow);
-  display: block;
-  margin-bottom: 4px;
-}
-
-/* ─── TABLE ─── */
-.ref-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 13px;
-  margin-top: 12px;
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-.ref-table th {
-  font-family: 'Quick', sans-serif;
-  font-size: 9px;
-  text-transform: uppercase;
-  letter-spacing: 3px;
-  color: #fff;
-  background: var(--color-primary);
-  text-align: left;
-  padding: 8px 12px;
-}
-
-.ref-table td {
-  padding: 9px 12px;
-  border-bottom: 1px solid var(--color-bg);
-  color: var(--color-body-text);
-  vertical-align: top;
-  line-height: 1.5;
-}
-
-.ref-table tr:last-child td { border-bottom: none; }
-.ref-table .col-key { font-weight: 700; color: var(--color-primary); font-size: 12px; }
-
-/* ─── FOOTER ─── */
-footer {
-  background: var(--color-primary);
-  padding: 24px 60px;
+.card-top {
   display: flex;
+  align-items: flex-start;
   justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
   gap: 8px;
 }
 
-.footer-brand {
-  font-family: 'Fraunces', serif;
-  font-weight: 900;
-  font-size: 15px;
-  text-transform: uppercase;
-  letter-spacing: -1px;
-  color: #FFFFFF;
+.card-badges {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
 }
 
-.footer-sub {
+.cat-badge {
   font-family: 'Quick', sans-serif;
   font-size: 10px;
   text-transform: uppercase;
-  letter-spacing: 3px;
-  color: rgba(255,255,255,0.5);
+  letter-spacing: 2px;
+  padding: 4px 10px;
+  border-radius: 50px;
 }
 
-/* ─── INFO BUTTON ─── */
-.info-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  background: rgba(255,255,255,0.15);
-  border: 1px solid rgba(255,255,255,0.3);
+.cat-badge.qualifier    { background: #E8C8DF; color: #7A3B6A; }
+.cat-badge.objection    { background: #889CA2; color: #FFFFFF; }
+.cat-badge.proof        { background: #B8DDB0; color: #2E5E28; }
+.cat-badge.curiosity    { background: rgba(243,181,72,0.22); color: #9A6800; }
+
+.custom-badge {
+  font-family: 'Quick', sans-serif;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  padding: 4px 10px;
+  border-radius: 50px;
+  background: var(--color-primary);
+  color: #fff;
+}
+
+.hook-num {
+  font-family: 'Nunito', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-coral);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.hook-text {
+  font-family: 'Nunito', sans-serif;
+  font-size: 14px;
+  color: var(--color-body-text);
+  line-height: 1.75;
+  flex: 1;
+}
+
+.view-original-link {
+  font-size: 12px;
+  color: var(--color-primary);
+  text-decoration: underline;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: 'Nunito', sans-serif;
+}
+
+/* ── EDIT MODE ──────────────────────────────────────── */
+.edit-area {
+  display: none;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.edit-area.open { display: flex; }
+
+.edit-textarea {
+  width: 100%;
+  min-height: 90px;
+  padding: 12px 14px;
+  border: 2px solid var(--color-primary);
+  border-radius: 12px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 14px;
+  color: var(--color-body-text);
+  line-height: 1.7;
+  resize: vertical;
+  outline: none;
+}
+
+.edit-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-save {
+  background: var(--color-yellow);
   color: #fff;
   font-family: 'Quick', sans-serif;
   font-size: 10px;
   text-transform: uppercase;
   letter-spacing: 2px;
-  padding: 8px 16px;
+  padding: 8px 18px;
   border-radius: 50px;
+  border: none;
   cursor: pointer;
-  margin-bottom: 28px;
-  transition: background 0.2s;
 }
-.info-btn:hover { background: rgba(255,255,255,0.25); }
-.info-btn svg { width: 15px; height: 15px; flex-shrink: 0; }
 
-/* ─── INFO MODAL OVERLAY ─── */
-.info-overlay {
+.btn-cancel {
+  background: var(--color-bg);
+  color: var(--color-body-text);
+  font-family: 'Quick', sans-serif;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  padding: 8px 18px;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+}
+
+/* ── CARD ACTIONS ───────────────────────────────────── */
+.card-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: auto;
+  padding-top: 4px;
+  border-top: 1px solid var(--color-bg);
+}
+
+.action-btn {
+  background: var(--color-bg);
+  border: none;
+  border-radius: 50px;
+  padding: 7px 14px;
+  font-family: 'Quick', sans-serif;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--color-body-text);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: background 0.15s, color 0.15s;
+  white-space: nowrap;
+}
+
+.action-btn:hover { background: #e5e5e5; }
+
+.action-btn.active-fav { color: #E07070; background: #fdeaea; }
+.action-btn.active-used { color: var(--color-primary); background: var(--color-sage); }
+.action-btn.copied { background: var(--color-sage); color: var(--color-primary); }
+
+/* ── EMPTY STATE ────────────────────────────────────── */
+.empty-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 60px 24px;
+  color: #aaa;
+  font-size: 15px;
+}
+
+/* ── FAVORITES SECTION ──────────────────────────────── */
+.favorites-section {
+  display: none;
+  margin-top: 16px;
+}
+
+.favorites-section.has-items {
+  display: block;
+}
+
+.fav-header {
+  background: var(--color-surface);
+  border-radius: 20px;
+  padding: 32px 40px;
+  margin-bottom: 16px;
+}
+
+.fav-title {
+  font-family: 'Fraunces', serif;
+  font-weight: 900;
+  font-size: 28px;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  letter-spacing: -1px;
+  margin-bottom: 4px;
+}
+
+.fav-sub {
+  font-family: 'Quick', sans-serif;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: var(--color-coral);
+}
+
+.tab-btn.tab-fav { color: #E07070; }
+.tab-btn.tab-fav.active { background: #E07070; color: #fff; }
+
+.fav-cat-group { margin-bottom: 20px; }
+
+.fav-empty {
+  background: var(--color-surface);
+  border-radius: 16px;
+  padding: 40px;
+  text-align: center;
+  color: #aaa;
+  font-size: 15px;
+  font-family: 'Nunito', sans-serif;
+}
+
+.fav-cat-label {
+  font-family: 'Quick', sans-serif;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: var(--color-coral);
+  margin-bottom: 12px;
+  padding: 0 4px;
+}
+
+.fav-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+@media (max-width: 640px) {
+  .fav-grid { grid-template-columns: 1fr; }
+}
+
+/* ── SHUFFLE MODAL ──────────────────────────────────── */
+.modal-overlay {
   display: none;
   position: fixed;
   inset: 0;
-  background: rgba(100,118,124,0.45);
+  background: rgba(80, 80, 80, 0.5);
   z-index: 1000;
   align-items: center;
   justify-content: center;
   padding: 24px;
 }
-.info-overlay.open { display: flex; }
 
-.info-modal {
+.modal-overlay.open { display: flex; }
+
+.modal-card {
   background: var(--color-surface);
   border-radius: 20px;
-  padding: 40px 44px;
-  max-width: 600px;
+  padding: 44px 48px;
+  max-width: 620px;
   width: 100%;
   position: relative;
-  max-height: 90vh;
-  overflow-y: auto;
 }
 
-.info-close {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
+.modal-eyebrow {
+  margin-bottom: 16px;
+}
+
+.modal-hook-text {
+  font-family: 'Fraunces', serif;
+  font-weight: 400;
+  font-size: 22px;
+  color: var(--color-primary);
+  line-height: 1.4;
+  margin-bottom: 28px;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.modal-action-btn {
   background: var(--color-bg);
   border: none;
+  border-radius: 50px;
+  padding: 9px 18px;
+  font-family: 'Quick', sans-serif;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--color-body-text);
   cursor: pointer;
   display: flex;
   align-items: center;
-  justify-content: center;
-  color: var(--color-primary);
-  transition: background 0.2s;
+  gap: 6px;
+  transition: background 0.15s;
 }
-.info-close:hover { background: #e4eaec; }
-.info-close svg { width: 13px; height: 13px; }
 
-.info-eyebrow {
+.modal-action-btn:hover { background: #e5e5e5; }
+.modal-action-btn.active-fav { color: #E07070; background: #fdeaea; }
+.modal-action-btn.active-used { color: var(--color-primary); background: var(--color-sage); }
+.modal-action-btn.copied { background: var(--color-sage); color: var(--color-primary); }
+
+.modal-btn-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.btn-shuffle-again {
+  background: var(--color-yellow);
+  color: #fff;
   font-family: 'Quick', sans-serif;
-  font-size: 10px;
+  font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 3px;
-  color: var(--color-coral);
-  margin-bottom: 8px;
-  text-align: center;
+  padding: 13px 28px;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.2s;
 }
 
-.info-heading {
-  font-family: 'Fraunces', serif;
-  font-weight: 400 !important;
-  font-size: 26px;
-  color: var(--color-primary);
-  line-height: 1.2;
-  margin-bottom: 16px;
-  text-align: center;
-  text-transform: none !important;
-  letter-spacing: normal !important;
-}
+.btn-shuffle-again:hover { opacity: 0.88; }
 
-.info-body {
-  font-family: 'Nunito', sans-serif;
-  font-size: 15px;
+.btn-close-modal {
+  background: transparent;
   color: var(--color-body-text);
-  line-height: 1.8;
-  margin-bottom: 8px;
-  text-align: left;
-}
-
-.info-divider {
-  height: 1px;
-  background: var(--color-bg);
-  margin: 24px 0;
-}
-
-.info-sublabel {
-  display: block;
   font-family: 'Quick', sans-serif;
-  font-size: 10px;
+  font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 3px;
-  color: var(--color-coral);
-  margin-bottom: 6px;
-  text-align: center;
+  padding: 13px 28px;
+  border-radius: 50px;
+  border: 2px solid #ddd;
+  cursor: pointer;
+  transition: border-color 0.2s;
 }
 
-.info-card-title {
-  font-family: 'Fraunces', serif;
-  font-weight: 400;
-  font-size: 20px;
-  color: var(--color-primary);
-  margin-bottom: 12px;
-  line-height: 1.2;
-}
+.btn-close-modal:hover { border-color: var(--color-primary); }
 
-@media (max-width: 720px) {
-  header, .roadmap-wrap, nav, main, footer { padding-left: 20px; padding-right: 20px; }
-  .roadmap-step-label { font-size: 8px; max-width: 60px; }
-  .phase-header { padding: 16px 20px; }
-  .task-group { padding: 20px; }
-  .info-modal { padding: 28px 24px; }
+/* ── RESPONSIVE ──────────────────────────────────────── */
+@media (max-width: 640px) {
+  .page-wrap { padding: 24px 16px 60px; }
+  .header { padding: 32px 24px 28px; }
+  .how-to-use { padding: 28px 24px; }
+  .controls { padding: 20px 20px; }
+  .controls-top { flex-wrap: wrap; }
+  .modal-card { padding: 32px 24px; }
+  .fav-header { padding: 24px 28px; }
+  .tabs { overflow-x: auto; flex-wrap: nowrap; padding-bottom: 4px; }
+  .tab-btn { flex-shrink: 0; }
 }
 </style>
 </head>
 <body>
+<div class="page-wrap">
 
-<!-- ─── HEADER ─── -->
-<header>
-  <div class="header-eyebrow">Simple Creator Co. — System Architecture</div>
-  <h1>30-Day IG Challenge</h1>
-  <div class="header-sub">Automation Build Plan</div>
-  <button class="info-btn" onclick="toggleInfo()" title="What are we building?">
-    <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="10" cy="10" r="9" stroke="currentColor" stroke-width="1.5"/><path d="M10 9v5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><circle cx="10" cy="6.5" r="0.75" fill="currentColor"/></svg>
-    What are we building?
-  </button>
-  <div class="header-meta">
-    <div class="meta-item">
-      <span class="meta-label">Offer</span>
-      <span class="meta-value">30-Day IG Challenge — $67</span>
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-eyebrow">Simple Creator Co. — Instagram Passive Sales System</div>
+    <div class="header-title">250-Hook Bank</div>
+    <div class="header-sub">Done-for-you hooks for every post type.</div>
+    <div class="header-desc">Fill in the brackets. Post with intention. Every hook is built to stop the scroll, call in your exact buyer, and drive your funnel — for any niche, any product, any audience.</div>
+  </div>
+
+  <!-- HOW TO USE -->
+  <div class="how-to-use">
+    <div class="section-label">Before You Start</div>
+    <div class="htu-toggle" onclick="toggleHowTo()">
+      <div class="htu-heading">How to Use This Hook Bank</div>
+      <span class="htu-arrow" id="htu-arrow">▼</span>
     </div>
-    <div class="meta-item">
-      <span class="meta-label">Position</span>
-      <span class="meta-value">Backend 1 — 5th Offer in Funnel</span>
-    </div>
-    <div class="meta-item">
-      <span class="meta-label">Pod Size</span>
-      <span class="meta-value">6–9 per cohort</span>
-    </div>
-    <div class="meta-item">
-      <span class="meta-label">Cadence</span>
-      <span class="meta-value">2× Monthly — 1st &amp; 15th</span>
+    <div class="htu-body" id="htu-body">
+      <p class="htu-intro">Every hook is a fill-in-the-blank template designed to work for any niche, any product, any audience. Here's all you need to know before you start.</p>
+      <div class="section-label" style="margin-bottom:8px;">The Brackets</div>
+      <div class="bracket-grid">
+        <div class="bracket-item">
+          <div class="bracket-key">[identity]</div>
+          <div class="bracket-desc">The specific person you're talking to. Not a category — a person. The more specific, the better it works. "Moms of toddlers who haven't had a meal that didn't come from a drive-through in three weeks" beats "busy moms" every time.</div>
+        </div>
+        <div class="bracket-item">
+          <div class="bracket-key">[desired outcome]</div>
+          <div class="bracket-desc">What they want. Be specific. "Feel better" is vague. "Cook a week's worth of dinners in 90 minutes on Sunday" is a hook.</div>
+        </div>
+        <div class="bracket-item">
+          <div class="bracket-key">[struggle / pain point]</div>
+          <div class="bracket-desc">What's hard for them right now. Use their words, not yours.</div>
+        </div>
+        <div class="bracket-item">
+          <div class="bracket-key">[your product]</div>
+          <div class="bracket-desc">Whatever you sell: a guide, planner, workbook, template, course, pattern, printable — anything.</div>
+        </div>
+        <div class="bracket-item">
+          <div class="bracket-key">[result]</div>
+          <div class="bracket-desc">The proof. Can be financial ($X from one product) or transformational (X people completed the challenge, X five-star reviews, X students got the outcome).</div>
+        </div>
+        <div class="bracket-item">
+          <div class="bracket-key">[relatable constraint]</div>
+          <div class="bracket-desc">What makes them feel like it won't work for them — limited time, no budget, no experience, life in the way.</div>
+        </div>
+      </div>
+      <div class="htu-rule"><strong>One rule above all:</strong> Never be clever when you can be clear. Your hook has one job — make the right person stop and feel seen.</div>
     </div>
   </div>
-</header>
 
-<!-- ─── INFO MODAL ─── -->
-<div class="info-overlay" id="infoOverlay" onclick="handleOverlayClick(event)">
-  <div class="info-modal">
-    <button class="info-close" onclick="toggleInfo()">
-      <svg viewBox="0 0 14 14" fill="none"><path d="M1 1l12 12M13 1L1 13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg>
-    </button>
-    <div class="info-eyebrow">What We're Building</div>
-    <p class="info-heading">The Goal</p>
-    <p class="info-body">The 30-Day IG Challenge runs as a recurring cohort product twice a month — on the 1st and the 15th. The goal of this build is to wire up the full system so that from the moment someone buys, everything that needs to happen just happens: they get course access, land in the roster, receive a confirmation email, get grouped into a pod with 6–9 other people, and receive their Telegram invite — without you touching anything.</p>
-    <div class="info-heading">How It Works</div>
-    <p class="info-body">A single SamCart purchase fires a Zapier zap that grants Kajabi access, logs the buyer to a Google Sheet, and tags them in Flodesk. On cutoff dates, buyers get grouped into pods automatically. Cowork then creates their Telegram group, schedules 5 check-in messages, and sends their welcome email — all from a saved task brief you trigger once.</p>
-    <p class="info-body">Once the system is built, your only recurring task is a 10-minute check before each cohort opens to verify everything looks right. After that, the 30-day challenge runs itself — two cohorts a month, zero ongoing manual work per buyer.</p>
+  <!-- CONTROLS -->
+  <div class="controls">
+    <div class="controls-top">
+      <div class="tabs" id="tabs">
+        <button class="tab-btn active" data-cat="all" onclick="setTab('all')">All</button>
+        <button class="tab-btn" data-cat="qualifier" onclick="setTab('qualifier')">🎯 Qualifier</button>
+        <button class="tab-btn" data-cat="objection" onclick="setTab('objection')">🔨 Objection Crusher</button>
+        <button class="tab-btn" data-cat="proof" onclick="setTab('proof')">🙌🏼 Proof</button>
+        <button class="tab-btn" data-cat="curiosity" onclick="setTab('curiosity')">✨ Curiosity Gap</button>
+        <button class="tab-btn tab-fav" data-cat="favorites" onclick="setTab('favorites')">♥ Favorites</button>
+      </div>
+      <button class="btn-shuffle" onclick="openShuffle()">✦ Shuffle</button>
+    </div>
   </div>
+
+  <!-- COUNT BAR -->
+  <div class="count-bar" id="countBar">Showing 250 of 250 hooks</div>
+
+  <!-- MAIN CONTENT (hooks grid OR favorites) -->
+  <div id="hookGrid" class="hook-grid"></div>
+  <div id="favoritesSection" class="favorites-section" style="display:none;">
+    <div id="favContent"></div>
+  </div>
+
 </div>
 
-<!-- ─── ROADMAP ─── -->
-<div class="roadmap-wrap">
-  <div class="roadmap-label">Build Roadmap</div>
-  <div class="roadmap-track" id="roadmapTrack">
-    <div class="roadmap-step" data-phase="phase1" onclick="scrollToPhase('phase1')">
-      <div class="roadmap-dot"><span class="dot-num">1</span><svg viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 3.5" stroke="#2D7A72" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="roadmap-step-label">Google Sheet</div>
+<!-- SHUFFLE MODAL -->
+<div class="modal-overlay" id="shuffleModal">
+  <div class="modal-card">
+    <div class="modal-eyebrow" id="modalBadge"></div>
+    <div class="modal-hook-text" id="modalHookText">Loading...</div>
+    <div class="modal-actions">
+      <button class="modal-action-btn" id="modalCopyBtn" onclick="modalCopy()">📋 Copy</button>
+      <button class="modal-action-btn" id="modalFavBtn" onclick="modalToggleFav()">♥ Favorite</button>
+      <button class="modal-action-btn" id="modalUsedBtn" onclick="modalToggleUsed()">✓ Mark as Used</button>
     </div>
-    <div class="roadmap-step" data-phase="phase2" onclick="scrollToPhase('phase2')">
-      <div class="roadmap-dot"><span class="dot-num">2</span><svg viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 3.5" stroke="#2D7A72" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="roadmap-step-label">SamCart + Kajabi</div>
+    <div class="modal-btn-row">
+      <button class="btn-shuffle-again" onclick="shuffleAgain()">✦ Shuffle Again</button>
+      <button class="btn-close-modal" onclick="closeModal()">Close</button>
     </div>
-    <div class="roadmap-step" data-phase="phase3" onclick="scrollToPhase('phase3')">
-      <div class="roadmap-dot"><span class="dot-num">3</span><svg viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 3.5" stroke="#2D7A72" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="roadmap-step-label">Zap 1</div>
-    </div>
-    <div class="roadmap-step" data-phase="phase4" onclick="scrollToPhase('phase4')">
-      <div class="roadmap-dot"><span class="dot-num">4</span><svg viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 3.5" stroke="#2D7A72" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="roadmap-step-label">Flodesk Emails</div>
-    </div>
-    <div class="roadmap-step" data-phase="phase5" onclick="scrollToPhase('phase5')">
-      <div class="roadmap-dot"><span class="dot-num">5</span><svg viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 3.5" stroke="#2D7A72" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="roadmap-step-label">Telegram Ref Doc</div>
-    </div>
-    <div class="roadmap-step" data-phase="phase6" onclick="scrollToPhase('phase6')">
-      <div class="roadmap-dot"><span class="dot-num">6</span><svg viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 3.5" stroke="#2D7A72" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="roadmap-step-label">Pod Grouping</div>
-    </div>
-    <div class="roadmap-step" data-phase="phase7" onclick="scrollToPhase('phase7')">
-      <div class="roadmap-dot"><span class="dot-num">7</span><svg viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 3.5" stroke="#2D7A72" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="roadmap-step-label">Zap 2A + 2B</div>
-    </div>
-    <div class="roadmap-step" data-phase="phase8" onclick="scrollToPhase('phase8')">
-      <div class="roadmap-dot"><span class="dot-num">8</span><svg viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 3.5" stroke="#2D7A72" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="roadmap-step-label">Cowork Brief + Test</div>
-    </div>
-  </div>
-  <div class="roadmap-progress-bar">
-    <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
-    <div class="progress-text" id="progressText">0 of 8 complete</div>
   </div>
 </div>
-
-
-
-
-<!-- ─── MAIN ─── -->
-<main>
-
-  <!-- PHASE 1 -->
-  <div class="phase-block" id="phase1">
-    <div class="phase-header" onclick="togglePhase('phase1')">
-      <div class="phase-num">1</div>
-      <div class="phase-header-text">
-        <div class="phase-eyebrow">Foundation — Do First</div>
-        <div class="phase-title">Google Sheet — Master Roster + Cohort Log</div>
-        <div class="phase-inline-progress">
-          <div class="phase-inline-track"><div class="phase-inline-fill" id="phase1-bar"></div></div>
-          <span class="phase-inline-label" id="phase1-count"></span>
-        </div>
-      </div>
-      <span class="phase-badge badge-todo" id="phase1-badge">To Do</span>
-      <svg class="phase-chevron" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </div>
-    <div class="phase-body">
-
-      <div class="task-group">
-        <div class="task-group-label">
-          Create the Sheet
-          <span class="tg-platform tg-sheets">Google Sheets</span>
-        </div>
-        <div class="task-item" id="t-1-1">
-          <input type="checkbox" class="task-cb" data-id="t-1-1" data-phase="phase1">
-          <div class="task-text">Create a new Google Sheet and name it clearly (e.g. "30-Day IG Challenge — System Roster")</div>
-        </div>
-        <div class="task-item" id="t-1-2">
-          <input type="checkbox" class="task-cb" data-id="t-1-2" data-phase="phase1">
-          <div class="task-text">Create Tab 1 and name it "Master Roster"</div>
-        </div>
-        <div class="task-item" id="t-1-3">
-          <input type="checkbox" class="task-cb" data-id="t-1-3" data-phase="phase1">
-          <div class="task-text">Create Tab 2 and name it "Cohort Log"</div>
-        </div>
-      </div>
-
-      <div class="task-group">
-        <div class="task-group-label">
-          Tab 1 — Master Roster Columns
-          <span class="tg-platform tg-sheets">Google Sheets</span>
-        </div>
-        <table class="ref-table">
-          <thead><tr><th>Col</th><th>Field Name</th><th>Filled By</th></tr></thead>
-          <tbody>
-            <tr><td class="col-key">A</td><td>Timestamp</td><td>Zapier (auto)</td></tr>
-            <tr><td class="col-key">B</td><td>First Name</td><td>Zapier — from SamCart order</td></tr>
-            <tr><td class="col-key">C</td><td>Email</td><td>Zapier — from SamCart order</td></tr>
-            <tr><td class="col-key">D</td><td>Purchase Date</td><td>Zapier — from SamCart order</td></tr>
-            <tr><td class="col-key">E</td><td>Cohort Month</td><td>e.g. "June 2026" — Zap 2 or Apps Script</td></tr>
-            <tr><td class="col-key">F</td><td>Pod Number</td><td>e.g. "Pod 1" — Zap 2 or Apps Script</td></tr>
-            <tr><td class="col-key">G</td><td>Assignment Status</td><td>Pending → Assigned</td></tr>
-            <tr><td class="col-key">H</td><td>Telegram Invite Link</td><td>Populated by Cowork</td></tr>
-            <tr><td class="col-key">I</td><td>Welcome Email Sent</td><td>Yes / No</td></tr>
-            <tr><td class="col-key">J</td><td>Notes</td><td>Manual field</td></tr>
-          </tbody>
-        </table>
-        <div class="task-item" style="margin-top:12px;" id="t-1-4">
-          <input type="checkbox" class="task-cb" data-id="t-1-4" data-phase="phase1">
-          <div class="task-text">Add all 10 column headers to Tab 1 — Master Roster</div>
-        </div>
-        <div class="task-item" id="t-1-5">
-          <input type="checkbox" class="task-cb" data-id="t-1-5" data-phase="phase1">
-          <div class="task-text">Freeze Row 1 as a header row</div>
-        </div>
-      </div>
-
-      <div class="task-group">
-        <div class="task-group-label">
-          Tab 2 — Cohort Log Columns
-          <span class="tg-platform tg-sheets">Google Sheets</span>
-        </div>
-        <table class="ref-table">
-          <thead><tr><th>Col</th><th>Field Name</th><th>Notes</th></tr></thead>
-          <tbody>
-            <tr><td class="col-key">A</td><td>Cohort Name</td><td>e.g. "June 2026 — 1st — Pod 1"</td></tr>
-            <tr><td class="col-key">B</td><td>Start Date</td><td>Always the 1st or 15th</td></tr>
-            <tr><td class="col-key">C</td><td>Cutoff Date</td><td>29th (1st cohort) or 13th (15th cohort)</td></tr>
-            <tr><td class="col-key">D</td><td>Member Count</td><td>Auto or manual</td></tr>
-            <tr><td class="col-key">E</td><td>Telegram Group Link</td><td>Populated by Cowork</td></tr>
-            <tr><td class="col-key">F</td><td>Flodesk Segment Name</td><td>e.g. "Challenge — June 2026 — 1st — Pod 1"</td></tr>
-            <tr><td class="col-key">G</td><td>Status</td><td>Building / Active / Complete</td></tr>
-          </tbody>
-        </table>
-        <div class="task-item" style="margin-top:12px;" id="t-1-6">
-          <input type="checkbox" class="task-cb" data-id="t-1-6" data-phase="phase1">
-          <div class="task-text">Add all 7 column headers to Tab 2 — Cohort Log</div>
-        </div>
-        <div class="task-item" id="t-1-7">
-          <input type="checkbox" class="task-cb" data-id="t-1-7" data-phase="phase1">
-          <div class="task-text">Freeze Row 1 as a header row</div>
-        </div>
-        <div class="task-item" id="t-1-8">
-          <input type="checkbox" class="task-cb" data-id="t-1-8" data-phase="phase1">
-          <div class="task-text">Save the sheet URL somewhere accessible — Zapier and Cowork will both need it</div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- PHASE 2 -->
-  <div class="phase-block" id="phase2">
-    <div class="phase-header" onclick="togglePhase('phase2')">
-      <div class="phase-num">2</div>
-      <div class="phase-header-text">
-        <div class="phase-eyebrow">Platform Setup</div>
-        <div class="phase-title">SamCart Connection + Kajabi Offer</div>
-        <div class="phase-inline-progress">
-          <div class="phase-inline-track"><div class="phase-inline-fill" id="phase2-bar"></div></div>
-          <span class="phase-inline-label" id="phase2-count"></span>
-        </div>
-      </div>
-      <span class="phase-badge badge-todo" id="phase2-badge">To Do</span>
-      <svg class="phase-chevron" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </div>
-    <div class="phase-body">
-
-      <div class="task-group">
-        <div class="task-group-label">
-          SamCart Setup
-          <span class="tg-platform tg-samcart">SamCart</span>
-        </div>
-        <div class="task-item" id="t-2-1">
-          <input type="checkbox" class="task-cb" data-id="t-2-1" data-phase="phase2">
-          <div class="task-text">Confirm the 30-Day IG Challenge ($67) is live and positioned as a backend offer in your funnel</div>
-        </div>
-        <div class="task-item" id="t-2-2">
-          <input type="checkbox" class="task-cb" data-id="t-2-2" data-phase="phase2">
-          <div class="task-text">In SamCart integrations, connect your Zapier account</div>
-        </div>
-        <div class="task-item" id="t-2-3">
-          <input type="checkbox" class="task-cb" data-id="t-2-3" data-phase="phase2">
-          <div class="task-text">Enable the "Order Created" webhook on the challenge product so every purchase fires to Zapier immediately</div>
-        </div>
-        <div class="task-item" id="t-2-4">
-          <input type="checkbox" class="task-cb" data-id="t-2-4" data-phase="phase2">
-          <div class="task-text">Do a test purchase (or confirm a test event works) to verify the webhook fires correctly to Zapier</div>
-        </div>
-      </div>
-
-      <div class="task-group">
-        <div class="task-group-label">
-          Kajabi Setup
-          <span class="tg-platform tg-kajabi">Kajabi</span>
-        </div>
-        <div class="task-item" id="t-2-5">
-          <input type="checkbox" class="task-cb" data-id="t-2-5" data-phase="phase2">
-          <div class="task-text">Create the 30-Day IG Challenge product in Kajabi if not already done</div>
-        </div>
-        <div class="task-item" id="t-2-6">
-          <input type="checkbox" class="task-cb" data-id="t-2-6" data-phase="phase2">
-          <div class="task-text">Set up an Offer in Kajabi for the challenge product — this is what Zapier will grant to buyers automatically</div>
-        </div>
-        <div class="task-item" id="t-2-7">
-          <input type="checkbox" class="task-cb" data-id="t-2-7" data-phase="phase2">
-          <div class="task-text">Turn off Kajabi's default welcome email for this product — Flodesk is handling all email communication</div>
-        </div>
-        <div class="task-item" id="t-2-8">
-          <input type="checkbox" class="task-cb" data-id="t-2-8" data-phase="phase2">
-          <div class="task-text">Confirm the Kajabi offer can be granted via Zapier's "Grant Offer to Member" action — test it with a dummy email</div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- PHASE 3 -->
-  <div class="phase-block" id="phase3">
-    <div class="phase-header" onclick="togglePhase('phase3')">
-      <div class="phase-num">3</div>
-      <div class="phase-header-text">
-        <div class="phase-eyebrow">Automation — Instant Purchase Trigger</div>
-        <div class="phase-title">Zap 1 — Purchase to Roster + Access + Tag</div>
-        <div class="phase-inline-progress">
-          <div class="phase-inline-track"><div class="phase-inline-fill" id="phase3-bar"></div></div>
-          <span class="phase-inline-label" id="phase3-count"></span>
-        </div>
-      </div>
-      <span class="phase-badge badge-todo" id="phase3-badge">To Do</span>
-      <svg class="phase-chevron" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </div>
-    <div class="phase-body">
-
-      <div class="task-group">
-        <div class="task-group-label">
-          Build the Zap
-          <span class="tg-platform tg-zapier">Zapier</span>
-        </div>
-        <div class="note-box">
-          <span class="note-label">What this zap does</span>
-          Fires instantly on every purchase. Three things happen in sequence: Kajabi grants access, buyer lands in the roster, Flodesk sends the confirmation email.
-        </div>
-        <div class="task-item" style="margin-top:12px;" id="t-3-1">
-          <input type="checkbox" class="task-cb" data-id="t-3-1" data-phase="phase3">
-          <div class="task-text">In Zapier, create a new Zap with trigger: SamCart → New Order (select the 30-Day IG Challenge product)</div>
-        </div>
-        <div class="task-item" id="t-3-2">
-          <input type="checkbox" class="task-cb" data-id="t-3-2" data-phase="phase3">
-          <div class="task-text">Add Action 1: Kajabi → Grant Offer to Member — map buyer's email from SamCart trigger</div>
-        </div>
-        <div class="task-item" id="t-3-3">
-          <input type="checkbox" class="task-cb" data-id="t-3-3" data-phase="phase3">
-          <div class="task-text">Add Action 2: Google Sheets → Create Spreadsheet Row in Master Roster — map: Timestamp, First Name, Email, Purchase Date, set Status = "Pending"</div>
-        </div>
-        <div class="task-item" id="t-3-4">
-          <input type="checkbox" class="task-cb" data-id="t-3-4" data-phase="phase3">
-          <div class="task-text">Add Action 3: Flodesk → Add/Update Subscriber — map buyer's email + first name, apply tag: <code>challenge-purchased</code></div>
-        </div>
-      </div>
-
-      <div class="task-group">
-        <div class="task-group-label">
-          Test + Activate
-          <span class="tg-platform tg-zapier">Zapier</span>
-        </div>
-        <div class="task-item" id="t-3-5">
-          <input type="checkbox" class="task-cb" data-id="t-3-5" data-phase="phase3">
-          <div class="task-text">Run a test purchase and confirm all 3 actions fire correctly — check Kajabi for access, Google Sheet for the new row, Flodesk for the tag</div>
-        </div>
-        <div class="task-item" id="t-3-6">
-          <input type="checkbox" class="task-cb" data-id="t-3-6" data-phase="phase3">
-          <div class="task-text">Turn the Zap on and mark it active</div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- PHASE 4 -->
-  <div class="phase-block" id="phase4">
-    <div class="phase-header" onclick="togglePhase('phase4')">
-      <div class="phase-num">4</div>
-      <div class="phase-header-text">
-        <div class="phase-eyebrow">Email — Two Templates</div>
-        <div class="phase-title">Flodesk — Purchase Confirmation + Welcome Template</div>
-        <div class="phase-inline-progress">
-          <div class="phase-inline-track"><div class="phase-inline-fill" id="phase4-bar"></div></div>
-          <span class="phase-inline-label" id="phase4-count"></span>
-        </div>
-      </div>
-      <span class="phase-badge badge-todo" id="phase4-badge">To Do</span>
-      <svg class="phase-chevron" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </div>
-    <div class="phase-body">
-
-      <div class="task-group">
-        <div class="task-group-label">
-          Email 1 — Purchase Confirmation (sends immediately)
-          <span class="tg-platform tg-flodesk">Flodesk</span>
-        </div>
-        <div class="task-item" id="t-4-1">
-          <input type="checkbox" class="task-cb" data-id="t-4-1" data-phase="phase4">
-          <div class="task-text">Create a new workflow in Flodesk triggered by the tag: <code>challenge-purchased</code></div>
-        </div>
-        <div class="task-item" id="t-4-2">
-          <input type="checkbox" class="task-cb" data-id="t-4-2" data-phase="phase4">
-          <div class="task-text">Write + design the confirmation email — celebrate the purchase, set expectations ("your pod opens on the 1st or 15th — watch for your invite")</div>
-        </div>
-        <div class="task-item" id="t-4-3">
-          <input type="checkbox" class="task-cb" data-id="t-4-3" data-phase="phase4">
-          <div class="task-text">Include delivery of the Profile Audit Tool as an immediate bonus (link or attachment)</div>
-        </div>
-        <div class="task-item" id="t-4-4">
-          <input type="checkbox" class="task-cb" data-id="t-4-4" data-phase="phase4">
-          <div class="task-text">Test the full trigger → email sends flow with a test subscriber using the <code>challenge-purchased</code> tag</div>
-        </div>
-      </div>
-
-      <div class="task-group">
-        <div class="task-group-label">
-          Email 2 — Welcome + Pod Invite (Reusable Template)
-          <span class="tg-platform tg-flodesk">Flodesk</span>
-        </div>
-        <div class="note-box">
-          <span class="note-label">Important</span>
-          This email is a template Cowork duplicates and customizes each cohort. Keep it clean and easy to edit. The placeholder <code>[TELEGRAM_LINK]</code> must be clearly visible.
-        </div>
-        <div class="task-item" style="margin-top:12px;" id="t-4-5">
-          <input type="checkbox" class="task-cb" data-id="t-4-5" data-phase="phase4">
-          <div class="task-text">Create this as a standalone email template (not inside a workflow) so Cowork can duplicate it each cohort</div>
-        </div>
-        <div class="task-item" id="t-4-6">
-          <input type="checkbox" class="task-cb" data-id="t-4-6" data-phase="phase4">
-          <div class="task-text">Headline: "Your pod is ready — here's your invite link" with <code>[TELEGRAM_LINK]</code> as a clearly labeled placeholder</div>
-        </div>
-        <div class="task-item" id="t-4-7">
-          <input type="checkbox" class="task-cb" data-id="t-4-7" data-phase="phase4">
-          <div class="task-text">Add one prominent CTA button pointing to <code>[TELEGRAM_LINK]</code></div>
-        </div>
-        <div class="task-item" id="t-4-8">
-          <input type="checkbox" class="task-cb" data-id="t-4-8" data-phase="phase4">
-          <div class="task-text">Include a brief week-by-week roadmap overview and what to expect from the 5 scheduled check-ins</div>
-        </div>
-        <div class="task-item" id="t-4-9">
-          <input type="checkbox" class="task-cb" data-id="t-4-9" data-phase="phase4">
-          <div class="task-text">Note the template name somewhere accessible — Cowork needs to know exactly what to search for in Flodesk</div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- PHASE 5 -->
-  <div class="phase-block" id="phase5">
-    <div class="phase-header" onclick="togglePhase('phase5')">
-      <div class="phase-num">5</div>
-      <div class="phase-header-text">
-        <div class="phase-eyebrow">Reference Content — Write Once, Use Forever</div>
-        <div class="phase-title">Telegram Scheduled Messages Reference Doc</div>
-        <div class="phase-inline-progress">
-          <div class="phase-inline-track"><div class="phase-inline-fill" id="phase5-bar"></div></div>
-          <span class="phase-inline-label" id="phase5-count"></span>
-        </div>
-      </div>
-      <span class="phase-badge badge-todo" id="phase5-badge">To Do</span>
-      <svg class="phase-chevron" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </div>
-    <div class="phase-body">
-
-      <div class="task-group">
-        <div class="task-group-label">
-          Create the Doc
-          <span class="tg-platform tg-manual">Google Drive</span>
-        </div>
-        <div class="task-item" id="t-5-1">
-          <input type="checkbox" class="task-cb" data-id="t-5-1" data-phase="phase5">
-          <div class="task-text">Create a new Google Doc and name it "30-Day IG Challenge — Telegram Scheduled Messages"</div>
-        </div>
-        <div class="task-item" id="t-5-2">
-          <input type="checkbox" class="task-cb" data-id="t-5-2" data-phase="phase5">
-          <div class="task-text">Write the final copy for all 5 check-in message prompts (see schedule below) — Cowork will copy these verbatim into every new group</div>
-        </div>
-      </div>
-
-      <div class="task-group">
-        <div class="task-group-label">Message Schedule</div>
-        <table class="ref-table">
-          <thead><tr><th>Day</th><th>Prompt Topic</th><th>Written?</th></tr></thead>
-          <tbody>
-            <tr><td class="col-key">Day 1</td><td>Welcome + drop the weekly roadmap</td><td><input type="checkbox" class="task-cb" data-id="t-5-d1" data-phase="phase5"></td></tr>
-            <tr><td class="col-key">Day 7</td><td>Week 1 check — drop your profile link for peer feedback</td><td><input type="checkbox" class="task-cb" data-id="t-5-d7" data-phase="phase5"></td></tr>
-            <tr><td class="col-key">Day 14</td><td>Halfway point — who's run their first ad? Share your numbers</td><td><input type="checkbox" class="task-cb" data-id="t-5-d14" data-phase="phase5"></td></tr>
-            <tr><td class="col-key">Day 21</td><td>ManyChat live? Drop your keyword — let's test each other's funnels</td><td><input type="checkbox" class="task-cb" data-id="t-5-d21" data-phase="phase5"></td></tr>
-            <tr><td class="col-key">Day 30</td><td>Final share — biggest win from this month</td><td><input type="checkbox" class="task-cb" data-id="t-5-d30" data-phase="phase5"></td></tr>
-          </tbody>
-        </table>
-        <div class="task-item" style="margin-top:12px;" id="t-5-3">
-          <input type="checkbox" class="task-cb" data-id="t-5-3" data-phase="phase5">
-          <div class="task-text">Save the doc URL — Cowork will reference this doc every time it creates a new pod</div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- PHASE 6 -->
-  <div class="phase-block" id="phase6">
-    <div class="phase-header" onclick="togglePhase('phase6')">
-      <div class="phase-num">6</div>
-      <div class="phase-header-text">
-        <div class="phase-eyebrow">Decision Required</div>
-        <div class="phase-title">Pod Grouping Logic — Manual or Apps Script</div>
-        <div class="phase-inline-progress">
-          <div class="phase-inline-track"><div class="phase-inline-fill" id="phase6-bar"></div></div>
-          <span class="phase-inline-label" id="phase6-count"></span>
-        </div>
-      </div>
-      <span class="phase-badge badge-todo" id="phase6-badge">To Do</span>
-      <svg class="phase-chevron" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </div>
-    <div class="phase-body">
-
-      <div class="task-group">
-        <div class="task-group-label">
-          Make the Decision
-          <span class="tg-platform tg-sheets">Google Sheets</span>
-        </div>
-        <div class="note-box">
-          <span class="note-label">Context</span>
-          Zapier can't do the "group into pods of 6–9" math on its own. Someone or something has to fill in the Cohort Month + Pod Number columns before Zap 2 fires. Option A is manual. Option B automates it with a Google Apps Script — ~1 hour of dev work, worth it at expected volume (40–80 buyers/cohort).
-        </div>
-        <div class="task-item" style="margin-top:12px;" id="t-6-1">
-          <input type="checkbox" class="task-cb" data-id="t-6-1" data-phase="phase6">
-          <div class="task-text">Decide: Manual (Option A) or Apps Script (Option B) — consider your expected volume before choosing</div>
-        </div>
-      </div>
-
-      <div class="task-group">
-        <div class="task-group-label">
-          Option A — Manual
-          <span class="tg-platform tg-manual">Manual</span>
-        </div>
-        <div class="task-item" id="t-6-a1">
-          <input type="checkbox" class="task-cb" data-id="t-6-a1" data-phase="phase6">
-          <div class="task-text">Document the manual process: before each cutoff date, open the Master Roster, sort by Purchase Date, fill in Cohort Month + Pod Number for each pending buyer in groups of 6–9, then change status to "Assigned"</div>
-        </div>
-        <div class="task-item" id="t-6-a2">
-          <input type="checkbox" class="task-cb" data-id="t-6-a2" data-phase="phase6">
-          <div class="task-text">Add a reminder to your calendar on the 12th and 28th of each month to do pod assignments before cutoff</div>
-        </div>
-      </div>
-
-      <div class="task-group">
-        <div class="task-group-label">
-          Option B — Apps Script (Recommended)
-          <span class="tg-platform tg-sheets">Google Sheets</span>
-        </div>
-        <div class="task-item" id="t-6-b1">
-          <input type="checkbox" class="task-cb" data-id="t-6-b1" data-phase="phase6">
-          <div class="task-text">Write (or have Claude write) a Google Apps Script that: finds all rows where Status = "Pending," groups them in batches of 6–9, fills in Cohort Month + Pod Number, and sets Status = "Assigned"</div>
-        </div>
-        <div class="task-item" id="t-6-b2">
-          <input type="checkbox" class="task-cb" data-id="t-6-b2" data-phase="phase6">
-          <div class="task-text">Set the script to trigger automatically on the 29th and 13th of each month, OR trigger it manually before each cutoff</div>
-        </div>
-        <div class="task-item" id="t-6-b3">
-          <input type="checkbox" class="task-cb" data-id="t-6-b3" data-phase="phase6">
-          <div class="task-text">Test the script on a sheet with dummy data rows before using it on real buyers</div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- PHASE 7 -->
-  <div class="phase-block" id="phase7">
-    <div class="phase-header" onclick="togglePhase('phase7')">
-      <div class="phase-num">7</div>
-      <div class="phase-header-text">
-        <div class="phase-eyebrow">Automation — Scheduled Cohort Tagging</div>
-        <div class="phase-title">Zap 2A + 2B — Flodesk Segment Assignment</div>
-        <div class="phase-inline-progress">
-          <div class="phase-inline-track"><div class="phase-inline-fill" id="phase7-bar"></div></div>
-          <span class="phase-inline-label" id="phase7-count"></span>
-        </div>
-      </div>
-      <span class="phase-badge badge-todo" id="phase7-badge">To Do</span>
-      <svg class="phase-chevron" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </div>
-    <div class="phase-body">
-
-      <div class="task-group">
-        <div class="task-group-label">
-          Zap 2A — 1st Cohort (fires 29th)
-          <span class="tg-platform tg-zapier">Zapier</span>
-        </div>
-        <div class="task-item" id="t-7-1">
-          <input type="checkbox" class="task-cb" data-id="t-7-1" data-phase="phase7">
-          <div class="task-text">Create Zap 2A with trigger: Zapier Schedule → Monthly, day 29</div>
-        </div>
-        <div class="task-item" id="t-7-2">
-          <input type="checkbox" class="task-cb" data-id="t-7-2" data-phase="phase7">
-          <div class="task-text">Add Action 1: Google Sheets → Lookup rows where Assignment Status = "Assigned" and upcoming Start Date = 1st of next month</div>
-        </div>
-        <div class="task-item" id="t-7-3">
-          <input type="checkbox" class="task-cb" data-id="t-7-3" data-phase="phase7">
-          <div class="task-text">Add Action 2: Flodesk → for each matched row, add subscriber to their pod segment (e.g. <code>june-1st-pod-1</code>)</div>
-        </div>
-        <div class="task-item" id="t-7-4">
-          <input type="checkbox" class="task-cb" data-id="t-7-4" data-phase="phase7">
-          <div class="task-text">Test Zap 2A with dummy rows in the sheet to confirm correct segment tagging</div>
-        </div>
-        <div class="task-item" id="t-7-5">
-          <input type="checkbox" class="task-cb" data-id="t-7-5" data-phase="phase7">
-          <div class="task-text">Turn Zap 2A on</div>
-        </div>
-      </div>
-
-      <div class="task-group">
-        <div class="task-group-label">
-          Zap 2B — 15th Cohort (fires 13th)
-          <span class="tg-platform tg-zapier">Zapier</span>
-        </div>
-        <div class="task-item" id="t-7-6">
-          <input type="checkbox" class="task-cb" data-id="t-7-6" data-phase="phase7">
-          <div class="task-text">Duplicate Zap 2A and update trigger to fire on the 13th of each month</div>
-        </div>
-        <div class="task-item" id="t-7-7">
-          <input type="checkbox" class="task-cb" data-id="t-7-7" data-phase="phase7">
-          <div class="task-text">Update the lookup to filter for Start Date = 15th of the current month</div>
-        </div>
-        <div class="task-item" id="t-7-8">
-          <input type="checkbox" class="task-cb" data-id="t-7-8" data-phase="phase7">
-          <div class="task-text">Test Zap 2B with dummy rows and confirm correct segment tagging for 15th cohort pods</div>
-        </div>
-        <div class="task-item" id="t-7-9">
-          <input type="checkbox" class="task-cb" data-id="t-7-9" data-phase="phase7">
-          <div class="task-text">Turn Zap 2B on</div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- PHASE 8 -->
-  <div class="phase-block" id="phase8">
-    <div class="phase-header" onclick="togglePhase('phase8')">
-      <div class="phase-num">8</div>
-      <div class="phase-header-text">
-        <div class="phase-eyebrow">Final Step — Monthly Recurring Task</div>
-        <div class="phase-title">Cowork Task Brief — Write + Dry Run</div>
-        <div class="phase-inline-progress">
-          <div class="phase-inline-track"><div class="phase-inline-fill" id="phase8-bar"></div></div>
-          <span class="phase-inline-label" id="phase8-count"></span>
-        </div>
-      </div>
-      <span class="phase-badge badge-todo" id="phase8-badge">To Do</span>
-      <svg class="phase-chevron" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </div>
-    <div class="phase-body">
-
-      <div class="task-group">
-        <div class="task-group-label">
-          Write the Task Brief
-          <span class="tg-platform tg-cowork">Claude Cowork</span>
-        </div>
-        <div class="task-item" id="t-8-1">
-          <input type="checkbox" class="task-cb" data-id="t-8-1" data-phase="phase8">
-          <div class="task-text">Create a saved task brief doc (Google Drive or Notion) with all the info Cowork needs</div>
-        </div>
-        <div class="task-item" id="t-8-2">
-          <input type="checkbox" class="task-cb" data-id="t-8-2" data-phase="phase8">
-          <div class="task-text">Include: Master Roster Google Sheet URL (direct link)</div>
-        </div>
-        <div class="task-item" id="t-8-3">
-          <input type="checkbox" class="task-cb" data-id="t-8-3" data-phase="phase8">
-          <div class="task-text">Include: Scheduled Messages Reference Doc URL (from Phase 5)</div>
-        </div>
-        <div class="task-item" id="t-8-4">
-          <input type="checkbox" class="task-cb" data-id="t-8-4" data-phase="phase8">
-          <div class="task-text">Include: Telegram group naming convention — "30-Day IG Challenge — [Month] [Year] — [1st or 15th] — Pod [#]"</div>
-        </div>
-        <div class="task-item" id="t-8-5">
-          <input type="checkbox" class="task-cb" data-id="t-8-5" data-phase="phase8">
-          <div class="task-text">Include: Flodesk segment naming convention — "Challenge — [Month] [Year] — [1st or 15th] — Pod [#]"</div>
-        </div>
-        <div class="task-item" id="t-8-6">
-          <input type="checkbox" class="task-cb" data-id="t-8-6" data-phase="phase8">
-          <div class="task-text">Include: the exact name of the Flodesk welcome email template to duplicate</div>
-        </div>
-        <div class="task-item" id="t-8-7">
-          <input type="checkbox" class="task-cb" data-id="t-8-7" data-phase="phase8">
-          <div class="task-text">Include: placeholder text to replace — <code>[TELEGRAM_LINK]</code></div>
-        </div>
-      </div>
-
-      <div class="task-group">
-        <div class="task-group-label">
-          Dry Run — Test on a Dummy Cohort
-          <span class="tg-platform tg-cowork">Claude Cowork</span>
-          <span class="tg-platform tg-telegram">Telegram</span>
-        </div>
-        <div class="note-box">
-          <span class="note-label">Important</span>
-          Telegram's bot API cannot create groups — only human accounts can. Cowork uses web.telegram.org to do this. Always do a full dry run before the first real cohort.
-        </div>
-        <div class="task-item" style="margin-top:12px;" id="t-8-8">
-          <input type="checkbox" class="task-cb" data-id="t-8-8" data-phase="phase8">
-          <div class="task-text">Add 2–3 dummy rows to the Master Roster and assign them to a test pod (e.g. "Test Cohort — Pod 1")</div>
-        </div>
-        <div class="task-item" id="t-8-9">
-          <input type="checkbox" class="task-cb" data-id="t-8-9" data-phase="phase8">
-          <div class="task-text">Trigger Cowork with the task brief for this test pod</div>
-        </div>
-        <div class="task-item" id="t-8-10">
-          <input type="checkbox" class="task-cb" data-id="t-8-10" data-phase="phase8">
-          <div class="task-text">Verify: Telegram group created with correct name at web.telegram.org</div>
-        </div>
-        <div class="task-item" id="t-8-11">
-          <input type="checkbox" class="task-cb" data-id="t-8-11" data-phase="phase8">
-          <div class="task-text">Verify: all 5 check-in messages scheduled correctly in the Telegram group</div>
-        </div>
-        <div class="task-item" id="t-8-12">
-          <input type="checkbox" class="task-cb" data-id="t-8-12" data-phase="phase8">
-          <div class="task-text">Verify: invite link logged correctly in the Cohort Log tab and the matching Master Roster rows</div>
-        </div>
-        <div class="task-item" id="t-8-13">
-          <input type="checkbox" class="task-cb" data-id="t-8-13" data-phase="phase8">
-          <div class="task-text">Verify: Flodesk welcome email template duplicated with correct invite link replacing <code>[TELEGRAM_LINK]</code></div>
-        </div>
-        <div class="task-item" id="t-8-14">
-          <input type="checkbox" class="task-cb" data-id="t-8-14" data-phase="phase8">
-          <div class="task-text">Verify: email assigned to the correct Flodesk segment and scheduled to send on the correct date</div>
-        </div>
-        <div class="task-item" id="t-8-15">
-          <input type="checkbox" class="task-cb" data-id="t-8-15" data-phase="phase8">
-          <div class="task-text">Fix anything that didn't work, re-run the dry run if needed, then mark the system ready for the first real cohort</div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-</main>
-
-<footer>
-  <span class="footer-brand">Simple Creator Co.</span>
-  <span class="footer-sub">30-Day IG Challenge · Build Plan · thesimplecreator.com</span>
-</footer>
 
 <script>
-// ─── INFO MODAL ───
-function toggleInfo() {
-  document.getElementById('infoOverlay').classList.toggle('open');
+// ── HOOK DATA ────────────────────────────────────────────────────────────────
+
+const HOOKS = [
+  // QUALIFIER (q1–q63)
+  {id:'q1',cat:'qualifier',text:'This is for the [identity] who\'s been [doing X thing] and still not seeing results.'},
+  {id:'q2',cat:'qualifier',text:'If you\'re a [identity] quietly Googling how to [desired outcome] — this is for you.'},
+  {id:'q3',cat:'qualifier',text:'This one\'s for the [identity] who keeps saying "I\'ll start when [excuse]."'},
+  {id:'q4',cat:'qualifier',text:'POV: You\'re a [identity] who\'s [situation] and you\'re starting to wonder if [fear].'},
+  {id:'q5',cat:'qualifier',text:'For the [identity] who wants [desired outcome] but doesn\'t want to [common tradeoff they\'re afraid of].'},
+  {id:'q6',cat:'qualifier',text:'This is not for everyone. But if you\'re a [identity] trying to [goal] — keep watching.'},
+  {id:'q7',cat:'qualifier',text:'If [desired outcome] sounds too good to be true, you\'re probably a [identity] who\'s been burned before. I see you.'},
+  {id:'q8',cat:'qualifier',text:'This is for the [identity] doing [thing] at [relatable time] wondering if it\'s ever going to work.'},
+  {id:'q9',cat:'qualifier',text:'If you\'ve ever [relatable action] and thought "[fear or doubt]" — I made this for you.'},
+  {id:'q10',cat:'qualifier',text:'For the [identity] who wants [desired outcome] without [common tradeoff they\'re afraid of].'},
+  {id:'q11',cat:'qualifier',text:'Are you a [identity] who\'s [situation]? Then you need to hear this.'},
+  {id:'q12',cat:'qualifier',text:'This post is specifically for [identity] who [specific problem they\'re experiencing].'},
+  {id:'q13',cat:'qualifier',text:'You\'re probably a [identity] if you\'ve ever [relatable struggle or scenario].'},
+  {id:'q14',cat:'qualifier',text:'POV: It\'s [time of day/week] and you\'re [relatable struggle] instead of [dream scenario].'},
+  {id:'q15',cat:'qualifier',text:'If you\'ve tried [X] and [Y] and still can\'t seem to [desired outcome] — you\'re in the right place.'},
+  {id:'q16',cat:'qualifier',text:'This is for the [identity] who\'s been at [current situation] long enough and is ready for [desired situation].'},
+  {id:'q17',cat:'qualifier',text:'For the [identity] who has [something — a skill, a story, an experience people ask about] but hasn\'t figured out what to do with it yet.'},
+  {id:'q18',cat:'qualifier',text:'This one\'s for the [identity] who\'s been watching other people get [result] and wondering why not them.'},
+  {id:'q19',cat:'qualifier',text:'If your [goal] keeps getting pushed to next month, this is your sign.'},
+  {id:'q20',cat:'qualifier',text:'For the [identity] who doesn\'t have [X], [Y], or [Z] — and still wants [desired outcome].'},
+  {id:'q21',cat:'qualifier',text:'If you resonated with "[relatable statement]" — hi, I\'m talking to you.'},
+  {id:'q22',cat:'qualifier',text:'You don\'t have to be a [stereotypical version of the expert] to [achieve outcome]. Let me show you.'},
+  {id:'q23',cat:'qualifier',text:'This is the post for every [identity] who feels like they\'re [too late / not enough / too much].'},
+  {id:'q24',cat:'qualifier',text:'If [common frustration] is your entire personality right now — same. And here\'s what I found.'},
+  {id:'q25',cat:'qualifier',text:'For the [identity] who keeps getting told [limiting belief] but refuses to believe it.'},
+  {id:'q26',cat:'qualifier',text:'POV: You\'ve been [doing X] for [time period] and you have nothing to show for it. Yet.'},
+  {id:'q27',cat:'qualifier',text:'This is for the [identity] who wants [outcome] but thought it was only possible for [someone else — the expert / the person with more time / the one who has it all together].'},
+  {id:'q28',cat:'qualifier',text:'If [outcome] is your goal and [relatable constraint] is your reality — this is exactly what you need.'},
+  {id:'q29',cat:'qualifier',text:'Raise your hand if you\'re a [identity] who\'s been thinking about [goal] way longer than you\'re willing to admit.'},
+  {id:'q30',cat:'qualifier',text:'This is not a motivational post. This is for [identity] who actually wants to [take one specific action].'},
+  {id:'q31',cat:'qualifier',text:'You\'re a [identity] if [super specific scenario that only your ideal person would relate to].'},
+  {id:'q32',cat:'qualifier',text:'For the [identity] who has tried [X], [Y], and [Z] and is tired of things that don\'t work for people like them.'},
+  {id:'q33',cat:'qualifier',text:'This is for the [identity] who wants [outcome] but needs it to work around [real-life constraint — their schedule, their budget, their season of life].'},
+  {id:'q34',cat:'qualifier',text:'If you\'ve ever opened your [phone / laptop / journal] at [time] and thought "[relatable anxious thought]" — hi.'},
+  {id:'q35',cat:'qualifier',text:'For the [identity] who is one [tool / system / resource] away from [breakthrough they\'re after].'},
+  {id:'q36',cat:'qualifier',text:'This is for the quietly ambitious [identity] who doesn\'t want [thing everyone else is pushing] — they just want [specific tangible outcome].'},
+  {id:'q37',cat:'qualifier',text:'If you\'re a [identity] and [relatable situation], you\'re going to want to watch this.'},
+  {id:'q38',cat:'qualifier',text:'POV: You\'re a [identity] who is great at [something] but has no idea how to [take it to the next level / help more people with it / make it work harder for you].'},
+  {id:'q39',cat:'qualifier',text:'This is for the [identity] who keeps saying [reason they haven\'t started yet] — and deep down knows that\'s not the real reason.'},
+  {id:'q40',cat:'qualifier',text:'For the [identity] who\'s been [doing X] but keeps [getting Y result they don\'t want].'},
+  {id:'q41',cat:'qualifier',text:'If [common advice in your niche] has never worked for you — you might just be a [specific type of person this is for].'},
+  {id:'q42',cat:'qualifier',text:'This is for the [identity] doing [thing] who wants [desired outcome] without [tradeoff].'},
+  {id:'q43',cat:'qualifier',text:'Are you the [identity] who [specific relatable problem — keeps starting over / never gets past step one / does all the research and none of the action]? This is your content.'},
+  {id:'q44',cat:'qualifier',text:'If you\'ve been [working hard at X] and still [not seeing result] — this is not a you problem.'},
+  {id:'q45',cat:'qualifier',text:'For the [identity] who doesn\'t want to become [thing they don\'t want to be] — they just want [what they actually want].'},
+  {id:'q46',cat:'qualifier',text:'This post is going to make every [identity] who [struggle] feel so much less alone.'},
+  {id:'q47',cat:'qualifier',text:'POV: You\'re a [identity] who\'s [situation] and you\'re finally ready to [action].'},
+  {id:'q48',cat:'qualifier',text:'This is for the [identity] who told themselves "[limiting belief]" and is starting to realize that\'s not true.'},
+  {id:'q49',cat:'qualifier',text:'If [outcome] feels possible for everyone except you — keep watching.'},
+  {id:'q50',cat:'qualifier',text:'For the [identity] who wants [goal] but has been waiting for [external permission or circumstance — the right time, enough confidence, perfect conditions].'},
+  {id:'q51',cat:'qualifier',text:'This is for every [identity] who\'s been [doing X] the hard way without knowing there was an easier one.'},
+  {id:'q52',cat:'qualifier',text:'If you\'re a [identity] who [relatable pain point] — this might be the most important thing you watch today.'},
+  {id:'q53',cat:'qualifier',text:'POV: You just [relatable moment] and realized you have no idea how to [next step].'},
+  {id:'q54',cat:'qualifier',text:'For the [identity] who keeps bookmarking posts about [topic] but hasn\'t actually [taken action] yet.'},
+  {id:'q55',cat:'qualifier',text:'This one\'s for the [identity] who\'s been [trying X] but secretly wonders if [self-doubt thought].'},
+  {id:'q56',cat:'qualifier',text:'If your version of [outcome] looks like [specific, relatable, smaller goal] — this is still for you.'},
+  {id:'q57',cat:'qualifier',text:'You know you\'re a [identity] when [hyper-specific relatable moment].'},
+  {id:'q58',cat:'qualifier',text:'This is the post I wish I had when I was a [identity] trying to [goal] with [limited resources].'},
+  {id:'q59',cat:'qualifier',text:'For the [identity] who wants [outcome] but keeps choosing [easier distraction] instead.'},
+  {id:'q60',cat:'qualifier',text:'If you\'ve been on the fence about [decision] for [time period] — this post is going to push you.'},
+  {id:'q61',cat:'qualifier',text:'This is for the [identity] who\'s good at [their thing] but hasn\'t figured out how to [next step].'},
+  {id:'q62',cat:'qualifier',text:'POV: You\'re [relatable situation] and you finally found the [resource / person / answer] who gets it.'},
+  {id:'q63',cat:'qualifier',text:'For the [identity] who doesn\'t need more [advice / content / inspiration] — they need [what will actually move the needle for them].'},
+
+  // OBJECTION CRUSHER (o1–o63)
+  {id:'o1',cat:'objection',text:'Think you need [X] to [achieve outcome]? You don\'t. Here\'s proof.'},
+  {id:'o2',cat:'objection',text:'You don\'t need [common prerequisite] to [desired outcome]. You need this.'},
+  {id:'o3',cat:'objection',text:'"[Objection]" is the lie keeping most [identity] from [outcome]. Let\'s talk about it.'},
+  {id:'o4',cat:'objection',text:'No [resource], no [resource], no [resource]? You can still [achieve outcome]. Here\'s how.'},
+  {id:'o5',cat:'objection',text:'The biggest myth in [niche]: that you need [X] before you can [Y].'},
+  {id:'o6',cat:'objection',text:'If you think [objection] is what\'s stopping you — it\'s not. Watch this.'},
+  {id:'o7',cat:'objection',text:'Stop waiting until you have [X] to start [Y]. Here\'s what actually matters.'},
+  {id:'o8',cat:'objection',text:'Can\'t [desired outcome] because you don\'t have [common barrier]? I hear that a lot. Here\'s the truth.'},
+  {id:'o9',cat:'objection',text:'Having [X] doesn\'t guarantee [outcome]. Not having it doesn\'t stop you either.'},
+  {id:'o10',cat:'objection',text:'The reason [objection] is not actually your problem — and what is.'},
+  {id:'o11',cat:'objection',text:'Unpopular opinion: You don\'t need [commonly believed requirement] to [achieve outcome].'},
+  {id:'o12',cat:'objection',text:'I used to think I needed [X] to [Y]. I was wrong. Here\'s what changed everything.'},
+  {id:'o13',cat:'objection',text:'"[Objection]" — said every [identity] who almost [achieved outcome] but didn\'t. Let me show you why.'},
+  {id:'o14',cat:'objection',text:'If [X] were a requirement for [outcome], a lot of people who have [outcome] wouldn\'t have it.'},
+  {id:'o15',cat:'objection',text:'The truth about [common objection] that nobody in [niche] wants to say out loud.'},
+  {id:'o16',cat:'objection',text:'[Outcome] doesn\'t require [X]. It never did. Here\'s what it actually requires.'},
+  {id:'o17',cat:'objection',text:'You\'ve been using [objection] as a reason not to [start / try / go for it]. Let\'s dismantle that today.'},
+  {id:'o18',cat:'objection',text:'What if the thing you think is stopping you from [outcome] is actually the thing keeping you stuck?'},
+  {id:'o19',cat:'objection',text:'"But I don\'t have [X]." I had [less than X] when I got [result]. Here\'s the real story.'},
+  {id:'o20',cat:'objection',text:'Nobody who has [outcome] had everything figured out before they started. Nobody.'},
+  {id:'o21',cat:'objection',text:'The [X] objection is real. Here\'s why it doesn\'t have to be a dealbreaker.'},
+  {id:'o22',cat:'objection',text:'If [common objection] is your reason for not [starting / trying / buying] — I want you to watch this.'},
+  {id:'o23',cat:'objection',text:'You can [achieve outcome] without [common thing people think they need]. And here\'s how I know.'},
+  {id:'o24',cat:'objection',text:'The problem isn\'t that you don\'t have [X]. The problem is [actual barrier]. Let me explain.'},
+  {id:'o25',cat:'objection',text:'Waiting for [X] to start [Y] is the most expensive mistake in [niche]. Here\'s why.'},
+  {id:'o26',cat:'objection',text:'Every [identity] I know who got [outcome] started with [less than you think].'},
+  {id:'o27',cat:'objection',text:'"I\'ll do it when [condition]." That condition isn\'t coming. This is.'},
+  {id:'o28',cat:'objection',text:'Think [niche] is too saturated for you to stand out? Here\'s what the data actually says.'},
+  {id:'o29',cat:'objection',text:'[Objection] is not the reason you haven\'t [achieved outcome]. I promise you. Watch this.'},
+  {id:'o30',cat:'objection',text:'The [common advice] isn\'t working because it was never designed for someone like you.'},
+  {id:'o31',cat:'objection',text:'You do not need [X], [Y], or [Z] to [achieve outcome]. You need [simple real answer].'},
+  {id:'o32',cat:'objection',text:'"I\'m not [techy / experienced / credentialed] enough" is not a [niche] problem. It\'s an information problem. Let me fix that.'},
+  {id:'o33',cat:'objection',text:'Let\'s be honest — [common objection] is a reason, not the reason. Here\'s what\'s really going on.'},
+  {id:'o34',cat:'objection',text:'The [X] you think you\'re missing? It\'s not what creates [outcome]. Here\'s what does.'},
+  {id:'o35',cat:'objection',text:'I\'ve seen people with [lots of X] fail and people with [almost no X] succeed. Here\'s the difference.'},
+  {id:'o36',cat:'objection',text:'"I don\'t have time to [action]." You have time. You just don\'t have a system. Let me give you one.'},
+  {id:'o37',cat:'objection',text:'The [objection] thing is real — and it\'s also completely solvable. Here\'s how.'},
+  {id:'o38',cat:'objection',text:'If [external condition] were a requirement for [outcome], I wouldn\'t have [result]. Here\'s my story.'},
+  {id:'o39',cat:'objection',text:'You don\'t need to be [the expert version of yourself] to [achieve outcome]. Here\'s what you actually need.'},
+  {id:'o40',cat:'objection',text:'What nobody tells you about [common barrier]: it\'s not the obstacle — it\'s the excuse.'},
+  {id:'o41',cat:'objection',text:'[Outcome] doesn\'t care how much experience you have. It cares about [simple true thing].'},
+  {id:'o42',cat:'objection',text:'Stop letting [fear or objection] be the thing that keeps you at [current situation] instead of [desired situation].'},
+  {id:'o43',cat:'objection',text:'The [niche] industry wants you to think you need [X]. You don\'t. Here\'s what works instead.'},
+  {id:'o44',cat:'objection',text:'"What if [fear]?" — the answer is [simple reframe]. And here\'s how that changes everything.'},
+  {id:'o45',cat:'objection',text:'I started with [relatable humble starting point] and [objection]. Here\'s what actually mattered.'},
+  {id:'o46',cat:'objection',text:'If [objection] were true, [example of someone who got the result anyway] wouldn\'t exist. But it does.'},
+  {id:'o47',cat:'objection',text:'"I\'m not ready yet." Ready is a feeling, not a fact. Here\'s how to know when to start anyway.'},
+  {id:'o48',cat:'objection',text:'The reason [common advice] doesn\'t work for [identity] — and what to do instead.'},
+  {id:'o49',cat:'objection',text:'You can [achieve outcome] even if you\'re [relatable constraint]. I know because I did.'},
+  {id:'o50',cat:'objection',text:'Your [objection] is not unique to you. And neither is the solution. Here it is.'},
+  {id:'o51',cat:'objection',text:'The hardest truth about [objection]: it\'s keeping you comfortable, not safe.'},
+  {id:'o52',cat:'objection',text:'[Outcome] is not reserved for people who have [X]. It\'s available to anyone who does [simple thing].'},
+  {id:'o53',cat:'objection',text:'"But my [niche / situation / audience] is different." Is it? Or is [objection] just the way it feels right now?'},
+  {id:'o54',cat:'objection',text:'What\'s actually stopping you from [outcome] has nothing to do with [objection they think it is].'},
+  {id:'o55',cat:'objection',text:'The [objection] you keep coming back to? It\'s a symptom, not the cause. Here\'s the real issue.'},
+  {id:'o56',cat:'objection',text:'If [X] were required for [outcome], I\'d tell you. It\'s not. Here\'s what is.'},
+  {id:'o57',cat:'objection',text:'"I\'ve tried [thing] before and it didn\'t work." That\'s because you were missing [key element]. This is it.'},
+  {id:'o58',cat:'objection',text:'[Outcome] with [constraint] is possible. I\'m going to show you exactly how.'},
+  {id:'o59',cat:'objection',text:'The moment I stopped waiting for [X] and started [Y], everything changed. Let me break it down.'},
+  {id:'o60',cat:'objection',text:'"It\'s too late for me to [action]." It\'s not. And the people who started late will tell you the same thing.'},
+  {id:'o61',cat:'objection',text:'You don\'t need [X amount of money / time / experience] to start [Y]. Here\'s the actual starting point.'},
+  {id:'o62',cat:'objection',text:'You don\'t need a massive platform to get a massive result. Here\'s the proof.'},
+  {id:'o63',cat:'objection',text:'The [objection] conversation is one I have every day. Here\'s the answer I give every time.'},
+
+  // PROOF (p1–p62)
+  {id:'p1',cat:'proof',text:'I\'m just a [relatable identity] and last [time period] I [result]. Here\'s the breakdown.'},
+  {id:'p2',cat:'proof',text:'My first [your product] sold for $[price] and has [result] since. I had [humble starting point].'},
+  {id:'p3',cat:'proof',text:'How I went from [before state] to [after state] as a [relatable identity] in [time period].'},
+  {id:'p4',cat:'proof',text:'I got [result] last [time period] with [relatable constraint]. Here\'s exactly what I did.'},
+  {id:'p5',cat:'proof',text:'[Number] people have used this to [outcome]. I\'m one of them.'},
+  {id:'p6',cat:'proof',text:'This [product / system / strategy] has [result] and it took [short time] to set up.'},
+  {id:'p7',cat:'proof',text:'Real talk: here\'s what [outcome] actually looks like for a [relatable identity] like me.'},
+  {id:'p8',cat:'proof',text:'I\'m not a [impressive-sounding title]. I\'m a [relatable identity] who [result] doing [thing].'},
+  {id:'p9',cat:'proof',text:'Last [time period], I [achieved result] without [common thing people think is required].'},
+  {id:'p10',cat:'proof',text:'Before [turning point], I was [relatable humble position]. Then [specific thing happened]. Here\'s the result.'},
+  {id:'p11',cat:'proof',text:'My [number]th [sale / download / customer / message] came in while I was [relatable everyday activity]. This is what [outcome] actually looks like.'},
+  {id:'p12',cat:'proof',text:'A [relatable identity] I know got [result] in [time period] starting from [humble starting point]. Here\'s their story.'},
+  {id:'p13',cat:'proof',text:'I got [result] from a $[price] [your product] while [relatable mundane activity]. Let that sink in.'},
+  {id:'p14',cat:'proof',text:'This is what [result] looks like for a [relatable identity] with [real constraints].'},
+  {id:'p15',cat:'proof',text:'[Number] people have gotten [outcome] using [system / method]. Here\'s what they all had in common.'},
+  {id:'p16',cat:'proof',text:'How a [relatable person] got [outcome] without [common barrier].'},
+  {id:'p17',cat:'proof',text:'The smallest [result] I ever had was [humble number]. It still [meant something — covered a bill / helped X people / changed someone\'s week].'},
+  {id:'p18',cat:'proof',text:'One [your product] has gotten me [result] and I made it in [short time]. Here\'s what it was.'},
+  {id:'p19',cat:'proof',text:'[Someone] went from [before state] to [after state] in [time period]. Here\'s what changed.'},
+  {id:'p20',cat:'proof',text:'I want to show you what [outcome] actually looks like — not the highlight reel version. The real story.'},
+  {id:'p21',cat:'proof',text:'My [product / system] got [result] last month and I didn\'t [do the thing people assume you have to do]. Here\'s the system behind it.'},
+  {id:'p22',cat:'proof',text:'[Number] months ago I had [humble starting point]. Here\'s what\'s different now.'},
+  {id:'p23',cat:'proof',text:'This is the part people don\'t show you: [honest breakdown of what achieving outcome actually looked like].'},
+  {id:'p24',cat:'proof',text:'I was a [relatable identity] with [humble starting point] when I decided to [action]. Here\'s what happened.'},
+  {id:'p25',cat:'proof',text:'[Outcome] happened for me at [specific moment] and I want you to see exactly how.'},
+  {id:'p26',cat:'proof',text:'A [relatable identity] I worked with went from [before] to [after] in [time]. Here\'s what they did.'},
+  {id:'p27',cat:'proof',text:'The [product] that got me [result] looked like [humble description]. Here\'s why it worked.'},
+  {id:'p28',cat:'proof',text:'Before [system / strategy], I was [before state]. Now [after state]. Same amount of hours in my week.'},
+  {id:'p29',cat:'proof',text:'My [recent period] results: [result]. My [earlier period] results: [smaller result]. Here\'s what changed.'},
+  {id:'p30',cat:'proof',text:'I replaced my [expense] with [result] in [time period]. Here\'s how.'},
+  {id:'p31',cat:'proof',text:'Not my biggest [win]. Not my smallest. But [result] — and here\'s why that matters.'},
+  {id:'p32',cat:'proof',text:'The [thing] I almost didn\'t [post / publish / share] got me [result]. Here\'s what I almost kept to myself.'},
+  {id:'p33',cat:'proof',text:'Someone [in my community / who found my product] had [objection] and still got [outcome] in [time period]. I want you to hear their story.'},
+  {id:'p34',cat:'proof',text:'I\'ve gotten [result] from [type of product] and I want to show you exactly what that looks like behind the scenes.'},
+  {id:'p35',cat:'proof',text:'What [result] actually required from me as a [relatable identity].'},
+  {id:'p36',cat:'proof',text:'My [simplest / most basic] offer has [outperformed / outsold / helped more people than] everything else I\'ve made. Here\'s why.'},
+  {id:'p37',cat:'proof',text:'[Number] [customers / downloads / sign-ups] in [time period] with [smaller than expected starting point]. Here\'s the proof.'},
+  {id:'p38',cat:'proof',text:'I set this up [time period] ago and it\'s still [getting result] every [time period]. Here\'s what it is.'},
+  {id:'p39',cat:'proof',text:'The [product] I created in [short time] has [result]. Here\'s what I\'d do differently.'},
+  {id:'p40',cat:'proof',text:'[Outcome] doesn\'t always look like [impressive version]. Sometimes it looks like [real, humble version]. Here\'s mine.'},
+  {id:'p41',cat:'proof',text:'How I made [outcome] happen around [real constraint] — because perfect conditions don\'t exist.'},
+  {id:'p42',cat:'proof',text:'A [student / customer / community member] went from [before] to [outcome] and they want me to share their exact path.'},
+  {id:'p43',cat:'proof',text:'Here\'s what [outcome] has actually looked like for me over [time period]. The full honest picture.'},
+  {id:'p44',cat:'proof',text:'I got [result] while [everyday relatable activity]. Not because I\'m lucky — because of [specific thing].'},
+  {id:'p45',cat:'proof',text:'My [product] is $[price]. It has [reached / helped / sold to] [number] people. I made it once.'},
+  {id:'p46',cat:'proof',text:'[Number] people have gotten [outcome] with [your method / product]. Here\'s what\'s possible for you.'},
+  {id:'p47',cat:'proof',text:'Before and after: What my [results / life / situation] looked like before and after [strategy / product / system].'},
+  {id:'p48',cat:'proof',text:'I\'m going to show you exactly what [outcome] looked like in my first [time period]. Real numbers, no filters.'},
+  {id:'p49',cat:'proof',text:'[Humble starting point] + [specific action] = [result]. Here\'s the formula that worked for me.'},
+  {id:'p50',cat:'proof',text:'A [relatable person] thought [outcome] wasn\'t possible for them. Here\'s what happened instead.'},
+  {id:'p51',cat:'proof',text:'What [achievement] looks like when you\'re a [relatable identity] with [real constraints].'},
+  {id:'p52',cat:'proof',text:'My [product / system] got [result] and the only thing special about it was [simple, replicable thing].'},
+  {id:'p53',cat:'proof',text:'I was [honest, relatable before state] when I [action]. Here\'s what it looked like [time period] later.'},
+  {id:'p54',cat:'proof',text:'The result that made me believe [outcome] was actually possible for someone like me.'},
+  {id:'p55',cat:'proof',text:'[Number] people have [outcome] because of this. I don\'t say that to brag — I say it so you believe you can too.'},
+  {id:'p56',cat:'proof',text:'Here\'s what the [first / most recent] [month / year] of [journey] looked like. No highlight reel. Just the real thing.'},
+  {id:'p57',cat:'proof',text:'My most [simple / unexpected] [product / offer / method] has [outperformed everything else]. Here\'s why that\'s a good thing for you.'},
+  {id:'p58',cat:'proof',text:'I got [result] by doing one thing differently than everyone else in [niche]. Here\'s what it was.'},
+  {id:'p59',cat:'proof',text:'This is what [outcome] looks like on a [random Tuesday / regular Wednesday / ordinary afternoon] — because that\'s the whole point.'},
+  {id:'p60',cat:'proof',text:'[Number] [people] said "[objection]" before they got [outcome]. Here\'s what they all did next.'},
+  {id:'p61',cat:'proof',text:'I didn\'t have [common thing]. I didn\'t have [other common thing]. I had [simple thing] and got [result].'},
+  {id:'p62',cat:'proof',text:'The [sale / message / result] that came in at [relatable time] made me realize [insight]. Here\'s why I\'m sharing it with you.'},
+
+  // CURIOSITY GAP (c1–c62)
+  {id:'c1',cat:'curiosity',text:'The reason [desired outcome] isn\'t happening for you — and it\'s not what you think.'},
+  {id:'c2',cat:'curiosity',text:'Nobody is talking about [specific thing] and it\'s costing people like you a lot of [time / money / energy / opportunity].'},
+  {id:'c3',cat:'curiosity',text:'The [thing] I stopped doing that changed everything about my [results].'},
+  {id:'c4',cat:'curiosity',text:'I almost [missed outcome / didn\'t do thing]. Here\'s what would have happened if I hadn\'t.'},
+  {id:'c5',cat:'curiosity',text:'The [strategy / tool / method] nobody in [niche] is talking about — and why that\'s your advantage.'},
+  {id:'c6',cat:'curiosity',text:'What [common thing everyone does] is actually doing to your [result] — and nobody will say it out loud.'},
+  {id:'c7',cat:'curiosity',text:'I need to talk about the problem with [popular strategy in your niche].'},
+  {id:'c8',cat:'curiosity',text:'The [thing] they don\'t tell you about [common goal / topic].'},
+  {id:'c9',cat:'curiosity',text:'Why [common advice] is keeping most [identity] exactly where they don\'t want to be.'},
+  {id:'c10',cat:'curiosity',text:'Something is happening in [niche] and most people haven\'t noticed it yet.'},
+  {id:'c11',cat:'curiosity',text:'The [outcome] isn\'t coming from where you think it is. Here\'s where it\'s actually coming from.'},
+  {id:'c12',cat:'curiosity',text:'I\'ve been sitting on this for a while and I finally have to say it: [teased insight].'},
+  {id:'c13',cat:'curiosity',text:'What I found out about [topic] after [experience] that nobody prepared me for.'},
+  {id:'c14',cat:'curiosity',text:'The reason [desired outcome] feels so hard — and why it\'s actually simpler than it looks.'},
+  {id:'c15',cat:'curiosity',text:'Stop doing [common thing]. Here\'s what to do instead.'},
+  {id:'c16',cat:'curiosity',text:'The [topic] conversation nobody in [niche] is having — and why it\'s the one that matters most.'},
+  {id:'c17',cat:'curiosity',text:'I switched from [X approach] to [Y approach] and my [result] changed dramatically. Here\'s what I did.'},
+  {id:'c18',cat:'curiosity',text:'Three things I wish I\'d known before I [started / tried / launched].'},
+  {id:'c19',cat:'curiosity',text:'The [mistake / habit / thing] that\'s silently killing your [result] — and it has nothing to do with [what they think].'},
+  {id:'c20',cat:'curiosity',text:'What [desired outcome] actually requires vs. what everyone tells you it requires.'},
+  {id:'c21',cat:'curiosity',text:'The [advice] everyone gives about [topic] is wrong. Here\'s what actually works.'},
+  {id:'c22',cat:'curiosity',text:'I found out why most [identity] never [achieve outcome] — and it\'s not [common scapegoat].'},
+  {id:'c23',cat:'curiosity',text:'Something changed in [niche] and the people who catch it early are going to [outcome]. Let me explain.'},
+  {id:'c24',cat:'curiosity',text:'The [strategy] that works in [niche] right now looks nothing like it did [time period] ago.'},
+  {id:'c25',cat:'curiosity',text:'Why I stopped [popular approach] and what happened when I did.'},
+  {id:'c26',cat:'curiosity',text:'The [result] you keep chasing is on the other side of [unexpected thing]. Here\'s what I mean.'},
+  {id:'c27',cat:'curiosity',text:'What if the [thing] you\'re working hardest on is the thing slowing you down the most?'},
+  {id:'c28',cat:'curiosity',text:'The difference between [people who get outcome] and [people who don\'t] is not what you think.'},
+  {id:'c29',cat:'curiosity',text:'Something nobody tells [identity] before they start [common journey]: [teased revelation].'},
+  {id:'c30',cat:'curiosity',text:'[Common belief in niche] is a myth. Here\'s what\'s actually true — and what to do about it.'},
+  {id:'c31',cat:'curiosity',text:'Why [popular platform / method / tool] is not the answer most [identity] think it is.'},
+  {id:'c32',cat:'curiosity',text:'The moment I realized [insight] — everything I was doing changed.'},
+  {id:'c33',cat:'curiosity',text:'There\'s a [thing] happening right now in [niche] and most people are completely missing it.'},
+  {id:'c34',cat:'curiosity',text:'I\'ve watched [number] people try [common approach] and fail. Here\'s the pattern I keep seeing.'},
+  {id:'c35',cat:'curiosity',text:'The [strategy] I almost didn\'t try — and the one that [result] actually came from.'},
+  {id:'c36',cat:'curiosity',text:'What [metric / number / sign] actually tells you about [topic] — and what to do about it.'},
+  {id:'c37',cat:'curiosity',text:'Most [identity] are focused on [X]. The ones getting [outcome] are focused on [Y].'},
+  {id:'c38',cat:'curiosity',text:'The [tool / method / habit] I added that changed my [result] faster than anything else.'},
+  {id:'c39',cat:'curiosity',text:'There\'s a reason [common problem] keeps happening to [identity] who are doing everything right. Here it is.'},
+  {id:'c40',cat:'curiosity',text:'I tested [thing] for [time period] and the results were not what I expected. Here\'s what actually happened.'},
+  {id:'c41',cat:'curiosity',text:'The [topic] advice that sounds right but is actually backwards — and what to replace it with.'},
+  {id:'c42',cat:'curiosity',text:'Why [outcome] gets harder the more [things] you try to add to it.'},
+  {id:'c43',cat:'curiosity',text:'What [your method / your product / this system] actually is — and why it works when everything else hasn\'t.'},
+  {id:'c44',cat:'curiosity',text:'I\'m going to show you something in this video that most [identity] never figure out on their own.'},
+  {id:'c45',cat:'curiosity',text:'The thing that makes [outcome] finally click — and why it\'s not the thing you\'re spending the most time on.'},
+  {id:'c46',cat:'curiosity',text:'[Common thing] is not your problem. [Real underlying issue] is. And here\'s how to fix it.'},
+  {id:'c47',cat:'curiosity',text:'What happened when I [did unexpected thing] instead of [common approach everyone uses].'},
+  {id:'c48',cat:'curiosity',text:'The [insight] that took me [time period] to learn — that you can get from this video right now.'},
+  {id:'c49',cat:'curiosity',text:'I know why [common struggle] keeps happening to you. And it\'s a [surprisingly simple] fix.'},
+  {id:'c50',cat:'curiosity',text:'The [thing] nobody tells you about [stage of journey] — until it\'s already too late.'},
+  {id:'c51',cat:'curiosity',text:'Why your [content / product / approach] isn\'t working — and no, it\'s not because of [common scapegoat].'},
+  {id:'c52',cat:'curiosity',text:'[Number] things I\'d do differently if I were starting [this journey] today. And one of them will surprise you.'},
+  {id:'c53',cat:'curiosity',text:'What [outcome] actually requires that nobody talks about because it doesn\'t make for a pretty post.'},
+  {id:'c54',cat:'curiosity',text:'The [strategy / method] I\'ve been quietly using that\'s behind most of my [results]. I\'m finally sharing it.'},
+  {id:'c55',cat:'curiosity',text:'If you\'re [doing common thing] and still not [getting result], you\'re missing [specific thing]. Here\'s what it is.'},
+  {id:'c56',cat:'curiosity',text:'The [thing] that separates [people who get outcome] from [people who don\'t] — it\'s not talent, timing, or luck.'},
+  {id:'c57',cat:'curiosity',text:'What I found when I looked at every [identity] who [achieved outcome]. There was one thing they all had.'},
+  {id:'c58',cat:'curiosity',text:'[Desired outcome] is easier than [niche] makes it look. The complication is [real reason]. Here\'s the fix.'},
+  {id:'c59',cat:'curiosity',text:'I\'m going to break down why [this approach] works — because once you understand it, you can\'t unsee it.'},
+  {id:'c60',cat:'curiosity',text:'The [result] I got from [simple action] that I almost didn\'t take. This is why I\'m sharing it.'},
+  {id:'c61',cat:'curiosity',text:'What [the most popular advice in your niche] is actually doing to your [outcome] — the part nobody wants to admit.'},
+  {id:'c62',cat:'curiosity',text:'Comment "[word]" if you want the [specific thing] that makes [desired outcome] actually happen.'},
+];
+
+// ── STATE ────────────────────────────────────────────────────────────────────
+let currentTab = 'all';
+let favorites = JSON.parse(localStorage.getItem('scc_favorites') || '[]');
+let usedHooks = JSON.parse(localStorage.getItem('scc_used') || '[]');
+let customTexts = JSON.parse(localStorage.getItem('scc_custom') || '{}');
+let currentModalId = null;
+
+// ── PERSISTENCE ──────────────────────────────────────────────────────────────
+function save() {
+  localStorage.setItem('scc_favorites', JSON.stringify(favorites));
+  localStorage.setItem('scc_used', JSON.stringify(usedHooks));
+  localStorage.setItem('scc_custom', JSON.stringify(customTexts));
 }
-function handleOverlayClick(e) {
-  if (e.target === document.getElementById('infoOverlay')) toggleInfo();
+
+// ── FILTER ───────────────────────────────────────────────────────────────────
+function getFilteredHooks() {
+  return currentTab === 'all' ? HOOKS : HOOKS.filter(h => h.cat === currentTab);
 }
 
-// ─── INFO MODAL ───
-function toggleInfo() {
-  document.getElementById('infoOverlay').classList.toggle('open');
-}
-
-function handleOverlayClick(e) {
-  if (e.target === document.getElementById('infoOverlay')) toggleInfo();
-}
-
-// ─── STORAGE KEY PREFIX ───
-const KEY = 'igchallenge_';
-
-// ─── PHASE CONFIG ───
-const PHASES = ['phase1','phase2','phase3','phase4','phase5','phase6','phase7','phase8'];
-
-// ─── RESTORE CHECKBOXES FROM LOCALSTORAGE ───
-function loadCheckboxes() {
-  document.querySelectorAll('.task-cb').forEach(cb => {
-    const id = cb.dataset.id;
-    if (!id) return;
-    const stored = localStorage.getItem(KEY + id);
-    if (stored === 'true') {
-      cb.checked = true;
-      cb.closest('.task-item')?.classList.add('completed');
-    }
+// ── TABS ─────────────────────────────────────────────────────────────────────
+function setTab(cat) {
+  currentTab = cat;
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.cat === cat);
   });
-}
-
-// ─── SAVE CHECKBOX STATE ───
-function saveCheckbox(cb) {
-  const id = cb.dataset.id;
-  if (!id) return;
-  localStorage.setItem(KEY + id, cb.checked);
-  cb.closest('.task-item')?.classList.toggle('completed', cb.checked);
-  updatePhaseProgress(cb.dataset.phase);
-  updateRoadmap();
-  autoAdvancePhases();
-}
-
-// ─── PHASE PROGRESS ───
-function getPhaseStats(phaseId) {
-  const all = document.querySelectorAll(`.task-cb[data-phase="${phaseId}"]`);
-  const done = [...all].filter(cb => cb.checked).length;
-  return { total: all.length, done };
-}
-
-function updatePhaseProgress(phaseId) {
-  if (!phaseId) return;
-  const { total, done } = getPhaseStats(phaseId);
-  const countEl = document.getElementById(phaseId + '-count');
-  const barEl   = document.getElementById(phaseId + '-bar');
-  const badgeEl = document.getElementById(phaseId + '-badge');
-  const block   = document.getElementById(phaseId);
-
-  const pct = total > 0 ? Math.round((done / total) * 100) : 0;
-  if (countEl) countEl.textContent = `${done} / ${total}`;
-  if (barEl)   barEl.style.width   = pct + '%';
-
-  if (done === total && total > 0) {
-    block.classList.add('done');
-    block.classList.remove('active');
-    if (badgeEl) { badgeEl.textContent = 'Done'; badgeEl.className = 'phase-badge badge-done'; }
-  } else if (done > 0) {
-    block.classList.remove('done');
-    block.classList.add('active');
-    if (badgeEl) { badgeEl.textContent = 'In Progress'; badgeEl.className = 'phase-badge badge-active'; }
+  if (cat === 'favorites') {
+    document.getElementById('hookGrid').style.display = 'none';
+    document.getElementById('favoritesSection').style.display = 'block';
+    document.getElementById('countBar').style.display = 'none';
+    renderFavorites();
   } else {
-    block.classList.remove('done','active');
-    if (badgeEl) { badgeEl.textContent = 'To Do'; badgeEl.className = 'phase-badge badge-todo'; }
+    document.getElementById('hookGrid').style.display = '';
+    document.getElementById('favoritesSection').style.display = 'none';
+    document.getElementById('countBar').style.display = '';
+    renderHooks();
   }
 }
 
-// ─── ROADMAP UPDATE ───
-function updateRoadmap() {
-  let doneCount = 0;
-  PHASES.forEach(phaseId => {
-    const { total, done } = getPhaseStats(phaseId);
-    const stepEl = document.querySelector(`.roadmap-step[data-phase="${phaseId}"]`);
-    if (!stepEl) return;
-    if (done === total && total > 0) {
-      stepEl.classList.add('done');
-      stepEl.classList.remove('active');
-      doneCount++;
-    } else if (done > 0) {
-      stepEl.classList.remove('done');
-      stepEl.classList.add('active');
-    } else {
-      stepEl.classList.remove('done','active');
-    }
+// ── DISPLAY TEXT ─────────────────────────────────────────────────────────────
+function displayText(id, original) {
+  return customTexts[id] || original;
+}
+
+// ── CATEGORY LABEL ───────────────────────────────────────────────────────────
+const CAT_LABELS = {
+  qualifier: 'Qualifier',
+  objection: 'Objection Crusher',
+  proof: 'Proof',
+  curiosity: 'Curiosity Gap'
+};
+
+// ── RENDER HOOK CARD ─────────────────────────────────────────────────────────
+function buildCard(hook, inFavorites = false) {
+  const isFav = favorites.includes(hook.id);
+  const isUsed = usedHooks.includes(hook.id);
+  const hasCustom = !!customTexts[hook.id];
+  const shown = displayText(hook.id, hook.text);
+  const num = hook.id.replace(/[a-z]/g,'');
+
+  const card = document.createElement('div');
+  card.className = 'hook-card' + (isUsed ? ' is-used' : '');
+  card.id = 'card-' + hook.id + (inFavorites ? '-fav' : '');
+
+  card.innerHTML = `
+    <div class="card-top">
+      <div class="card-badges">
+        <span class="cat-badge ${hook.cat}">${CAT_LABELS[hook.cat]}</span>
+        ${hasCustom ? '<span class="custom-badge">Customized</span>' : ''}
+      </div>
+      <span class="hook-num">#${num}</span>
+    </div>
+    <div class="hook-text" id="text-${hook.id}${inFavorites?'-fav':''}">${escapeHtml(shown)}</div>
+    ${hasCustom ? `<button class="view-original-link" onclick="toggleOriginal('${hook.id}','${inFavorites}')">View original template</button>` : ''}
+    <div class="edit-area" id="edit-${hook.id}${inFavorites?'-fav':''}">
+      <textarea class="edit-textarea" id="ta-${hook.id}${inFavorites?'-fav':''}">${escapeHtml(shown)}</textarea>
+      <div class="edit-actions">
+        <button class="btn-save" onclick="saveCustom('${hook.id}','${inFavorites}')">Save My Version</button>
+        <button class="btn-cancel" onclick="cancelEdit('${hook.id}','${inFavorites}')">Cancel</button>
+      </div>
+    </div>
+    <div class="card-actions">
+      <button class="action-btn" onclick="openEdit('${hook.id}','${inFavorites}')">✏️ Edit</button>
+      <button class="action-btn${'' }" id="copy-${hook.id}${inFavorites?'-fav':''}" onclick="copyHook('${hook.id}','${inFavorites}')">📋 Copy</button>
+      <button class="action-btn${isUsed?' active-used':''}" id="used-${hook.id}${inFavorites?'-fav':''}" onclick="toggleUsed('${hook.id}')">✓ Used</button>
+      ${inFavorites
+        ? `<button class="action-btn" style="margin-left:auto;" onclick="removeFav('${hook.id}')">× Remove</button>`
+        : `<button class="action-btn${isFav?' active-fav':''}" id="fav-${hook.id}" onclick="toggleFav('${hook.id}')">♥ ${isFav?'Saved':'Save'}</button>`
+      }
+    </div>
+  `;
+  return card;
+}
+
+function escapeHtml(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── RENDER MAIN GRID ─────────────────────────────────────────────────────────
+function renderHooks() {
+  const grid = document.getElementById('hookGrid');
+  const hooks = getFilteredHooks();
+  grid.innerHTML = '';
+
+  document.getElementById('countBar').textContent =
+    `Showing ${hooks.length} of ${HOOKS.length} hooks`;
+
+  hooks.forEach(h => grid.appendChild(buildCard(h, false)));
+}
+
+// ── RENDER FAVORITES ─────────────────────────────────────────────────────────
+function renderFavorites() {
+  const content = document.getElementById('favContent');
+  content.innerHTML = '';
+
+  // Update tab label with count
+  const favTab = document.querySelector('.tab-fav');
+  if (favTab) {
+    favTab.textContent = favorites.length ? `♥ Favorites (${favorites.length})` : '♥ Favorites';
+  }
+
+  if (!favorites.length) {
+    content.innerHTML = '<div class="fav-empty">Tap the ♥ on any hook to save it here.</div>';
+    return;
+  }
+
+  const cats = ['qualifier','objection','proof','curiosity'];
+  cats.forEach(cat => {
+    const catFavs = favorites
+      .map(id => HOOKS.find(h => h.id === id))
+      .filter(h => h && h.cat === cat);
+
+    if (!catFavs.length) return;
+
+    const group = document.createElement('div');
+    group.className = 'fav-cat-group';
+    group.innerHTML = `<div class="fav-cat-label">${CAT_LABELS[cat]}</div>`;
+
+    const grid = document.createElement('div');
+    grid.className = 'fav-grid';
+    catFavs.forEach(h => grid.appendChild(buildCard(h, true)));
+
+    group.appendChild(grid);
+    content.appendChild(group);
   });
-  const pct = Math.round((doneCount / PHASES.length) * 100);
-  const fill = document.getElementById('progressFill');
-  const txt = document.getElementById('progressText');
-  if (fill) fill.style.width = pct + '%';
-  if (txt) txt.textContent = `${doneCount} of ${PHASES.length} complete`;
 }
 
-// ─── AUTO ADVANCE: open first incomplete phase ───
-function autoAdvancePhases() {
-  // only auto-open if no phase is currently manually open by user
-  // We just update classes; open state is stored per session
-  const savedOpen = sessionStorage.getItem(KEY + 'openPhase');
-  if (savedOpen) return; // user has taken control — don't override
-  openFirstIncomplete();
-}
+// ── TOGGLE ORIGINAL ──────────────────────────────────────────────────────────
+const showingOriginal = {};
+function toggleOriginal(id, inFavStr) {
+  const inFav = inFavStr === 'true';
+  const suffix = inFav ? '-fav' : '';
+  const key = id + suffix;
+  const hook = HOOKS.find(h => h.id === id);
+  const textEl = document.getElementById(`text-${id}${suffix}`);
+  const btn = textEl.nextElementSibling;
 
-function openFirstIncomplete() {
-  let opened = false;
-  PHASES.forEach(phaseId => {
-    const block = document.getElementById(phaseId);
-    if (!block) return;
-    if (!opened && !block.classList.contains('done')) {
-      block.classList.add('open');
-      opened = true;
-    } else {
-      block.classList.remove('open');
-    }
-  });
-}
-
-// ─── TOGGLE PHASE ───
-function togglePhase(phaseId) {
-  const block = document.getElementById(phaseId);
-  const isOpen = block.classList.contains('open');
-  // close all
-  PHASES.forEach(p => document.getElementById(p)?.classList.remove('open'));
-  if (!isOpen) {
-    block.classList.add('open');
-    sessionStorage.setItem(KEY + 'openPhase', phaseId);
+  if (showingOriginal[key]) {
+    textEl.textContent = displayText(id, hook.text);
+    btn.textContent = 'View original template';
+    showingOriginal[key] = false;
   } else {
-    sessionStorage.removeItem(KEY + 'openPhase');
+    textEl.textContent = hook.text;
+    btn.textContent = 'View my version';
+    showingOriginal[key] = true;
   }
 }
 
-// ─── SCROLL TO PHASE ───
-function scrollToPhase(phaseId) {
-  const el = document.getElementById(phaseId);
-  if (!el) return;
-  // open it
-  PHASES.forEach(p => document.getElementById(p)?.classList.remove('open'));
-  el.classList.add('open');
-  sessionStorage.setItem(KEY + 'openPhase', phaseId);
-  setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+// ── EDIT ─────────────────────────────────────────────────────────────────────
+function openEdit(id, inFavStr) {
+  const suffix = inFavStr === 'true' ? '-fav' : '';
+  const editEl = document.getElementById(`edit-${id}${suffix}`);
+  const taEl = document.getElementById(`ta-${id}${suffix}`);
+  const hook = HOOKS.find(h => h.id === id);
+  taEl.value = displayText(id, hook.text);
+  editEl.classList.add('open');
+  taEl.focus();
 }
 
-// ─── INIT ───
-document.addEventListener('DOMContentLoaded', () => {
-  // load saved checkbox states
-  loadCheckboxes();
+function cancelEdit(id, inFavStr) {
+  const suffix = inFavStr === 'true' ? '-fav' : '';
+  document.getElementById(`edit-${id}${suffix}`).classList.remove('open');
+}
 
-  // attach listeners
-  document.querySelectorAll('.task-cb').forEach(cb => {
-    cb.addEventListener('change', () => saveCheckbox(cb));
+function saveCustom(id, inFavStr) {
+  const suffix = inFavStr === 'true' ? '-fav' : '';
+  const taEl = document.getElementById(`ta-${id}${suffix}`);
+  const val = taEl.value.trim();
+  if (!val) return;
+  customTexts[id] = val;
+  save();
+  renderHooks();
+  renderFavorites();
+}
+
+// ── COPY ─────────────────────────────────────────────────────────────────────
+function copyHook(id, inFavStr) {
+  const suffix = inFavStr === 'true' ? '-fav' : '';
+  const hook = HOOKS.find(h => h.id === id);
+  const text = displayText(id, hook.text);
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById(`copy-${id}${suffix}`);
+    if (!btn) return;
+    const orig = btn.textContent;
+    btn.textContent = '✓ Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = orig; btn.classList.remove('copied'); }, 1800);
   });
+}
 
-  // update all phase progress displays
-  PHASES.forEach(updatePhaseProgress);
-  updateRoadmap();
-
-  // determine which phase to open
-  const savedOpen = sessionStorage.getItem(KEY + 'openPhase');
-  if (savedOpen && document.getElementById(savedOpen)) {
-    document.getElementById(savedOpen).classList.add('open');
+// ── TOGGLE USED ──────────────────────────────────────────────────────────────
+function toggleUsed(id) {
+  if (usedHooks.includes(id)) {
+    usedHooks = usedHooks.filter(x => x !== id);
   } else {
-    openFirstIncomplete();
+    usedHooks.push(id);
   }
+  save();
+  renderHooks();
+  renderFavorites();
+}
+
+// ── TOGGLE FAV ───────────────────────────────────────────────────────────────
+function toggleFav(id) {
+  if (favorites.includes(id)) {
+    favorites = favorites.filter(x => x !== id);
+  } else {
+    favorites.push(id);
+  }
+  save();
+  renderHooks();
+  renderFavorites();
+}
+
+function removeFav(id) {
+  favorites = favorites.filter(x => x !== id);
+  save();
+  renderHooks();
+  renderFavorites();
+}
+
+// ── HOW TO USE TOGGLE ────────────────────────────────────────────────────────
+function toggleHowTo() {
+  const body = document.getElementById('htu-body');
+  const arrow = document.getElementById('htu-arrow');
+  body.classList.toggle('open');
+  arrow.classList.toggle('open');
+}
+
+// ── SHUFFLE MODAL ────────────────────────────────────────────────────────────
+function getShufflePool() {
+  const pool = currentTab === 'all' ? HOOKS : HOOKS.filter(h => h.cat === currentTab);
+  return pool.length ? pool : HOOKS;
+}
+
+function openShuffle() {
+  shuffleAgain();
+  document.getElementById('shuffleModal').classList.add('open');
+}
+
+function shuffleAgain() {
+  const pool = getShufflePool();
+  const hook = pool[Math.floor(Math.random() * pool.length)];
+  currentModalId = hook.id;
+  document.getElementById('modalBadge').innerHTML =
+    `<span class="cat-badge ${hook.cat}">${CAT_LABELS[hook.cat]}</span>`;
+  document.getElementById('modalHookText').textContent = displayText(hook.id, hook.text);
+  updateModalBtns();
+}
+
+function updateModalBtns() {
+  const id = currentModalId;
+  const favBtn = document.getElementById('modalFavBtn');
+  const usedBtn = document.getElementById('modalUsedBtn');
+  const copyBtn = document.getElementById('modalCopyBtn');
+  favBtn.classList.toggle('active-fav', favorites.includes(id));
+  favBtn.textContent = favorites.includes(id) ? '♥ Saved' : '♥ Favorite';
+  usedBtn.classList.toggle('active-used', usedHooks.includes(id));
+  copyBtn.classList.remove('copied');
+  copyBtn.textContent = '📋 Copy';
+}
+
+function closeModal() {
+  document.getElementById('shuffleModal').classList.remove('open');
+}
+
+function modalCopy() {
+  const hook = HOOKS.find(h => h.id === currentModalId);
+  const text = displayText(currentModalId, hook.text);
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('modalCopyBtn');
+    btn.textContent = '✓ Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = '📋 Copy'; btn.classList.remove('copied'); }, 1800);
+  });
+}
+
+function modalToggleFav() {
+  toggleFav(currentModalId);
+  updateModalBtns();
+}
+
+function modalToggleUsed() {
+  toggleUsed(currentModalId);
+  updateModalBtns();
+}
+
+// Close modal on overlay click
+document.getElementById('shuffleModal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
 });
-</script>
 
+// ── INIT ─────────────────────────────────────────────────────────────────────
+renderHooks();
+renderFavorites();</script>
 </body>
 </html>
