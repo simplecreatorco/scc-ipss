@@ -190,9 +190,10 @@ body {
 
 .controls-row-1 {
   display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
+  gap: 6px;
   justify-content: center;
+  flex-wrap: nowrap;
+  overflow: hidden;
 }
 
 .controls-row-2 {
@@ -224,10 +225,10 @@ body {
 
 .tab-btn {
   font-family: 'Quick', sans-serif;
-  font-size: 11px;
+  font-size: 10px;
   text-transform: uppercase;
-  letter-spacing: 3px;
-  padding: 10px 20px;
+  letter-spacing: 2px;
+  padding: 10px 14px;
   border-radius: 50px;
   border: none;
   cursor: pointer;
@@ -235,6 +236,8 @@ body {
   background: var(--color-bg);
   color: var(--color-body-text);
   white-space: nowrap;
+  flex-shrink: 1;
+  min-width: 0;
 }
 
 .tab-btn:hover { background: #e5e5e5; }
@@ -616,7 +619,6 @@ body {
   .fav-grid { grid-template-columns: 1fr; }
 }
 </style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js"></script>
 </head>
 <body>
 <div class="page-wrap">
@@ -712,7 +714,7 @@ body {
   </div>
 </div>
 
-<script type="text/babel">
+<script>
 // ── HOOK DATA ────────────────────────────────────────────────────────────────
 
 const HOOKS = [
