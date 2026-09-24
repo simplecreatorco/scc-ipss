@@ -132,6 +132,11 @@ body { background: var(--color-bg); font-family: 'Nunito', sans-serif; color: va
 .confidence-label { font-family: 'Quick', sans-serif; font-size: 11px; text-transform: uppercase; letter-spacing: 3px; color: var(--color-coral); margin-bottom: 8px; }
 .confidence-score { font-family: 'Fraunces', serif; font-weight: 900; font-size: 72px; color: var(--color-primary); letter-spacing: -2px; line-height: 1; margin-bottom: 4px; }
 .confidence-score.high { color: #4A8C63; }
+.confidence-section.perfect { background: linear-gradient(135deg, #FFF3D4 0%, #F6D5CD 50%, #BFD9CC 100%); }
+.confidence-section.perfect .confidence-score { animation: pop 0.6s cubic-bezier(.2,1.4,.4,1); }
+.confidence-section.perfect .confidence-goal { font-family: 'Fraunces', serif; font-size: 20px; color: var(--color-primary); }
+@keyframes pop { 0% { transform: scale(0.6); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+#confettiCanvas { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 999; }
 .confidence-score.mid { color: #D4A017; }
 .confidence-score.low { color: var(--color-coral); }
 .confidence-goal { font-size: 14px; color: var(--color-text); margin-bottom: 16px; }
@@ -151,6 +156,14 @@ body { background: var(--color-bg); font-family: 'Nunito', sans-serif; color: va
 .feedback-card { border-radius: 12px; padding: 20px 24px; margin-bottom: 12px; }
 .feedback-positive { background: #EEF7F2; }
 .feedback-warning { background: #FFF8ED; }
+.feedback-negative { background: #FEF0EE; }
+.tighten-list { margin: 0 0 0 18px; padding: 0; font-size: 15px; color: var(--color-text); line-height: 1.7; }
+.tighten-list li { margin-bottom: 6px; }
+.tighten-list li:last-child { margin-bottom: 0; }
+.suggestion-box { background: #fff; border-radius: 10px; padding: 12px 16px; margin-top: 12px; border-left: 3px solid var(--color-yellow); }
+.suggestion-label { font-family: 'Quick', sans-serif; font-size: 10px; text-transform: uppercase; letter-spacing: 3px; color: var(--color-yellow); margin-bottom: 4px; }
+.suggestion-text { font-size: 15px; color: var(--color-text); line-height: 1.7; white-space: pre-wrap; }
+.feedback-negative .feedback-label { color: #C0544A; }
 .feedback-label { font-family: 'Quick', sans-serif; font-size: 10px; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
 .feedback-positive .feedback-label { color: #4A8C63; }
 .feedback-warning .feedback-label { color: #B8860B; }
@@ -233,6 +246,8 @@ body { background: var(--color-bg); font-family: 'Nunito', sans-serif; color: va
 </head>
 <body>
 
+<canvas id="confettiCanvas" style="display:none;"></canvas>
+
 <button class="sidebar-toggle-btn" onclick="toggleSidebar()">
   <span>Saved Posts</span>
   <span class="saved-count-badge" id="savedBadge">0</span>
@@ -254,6 +269,7 @@ body { background: var(--color-bg); font-family: 'Nunito', sans-serif; color: va
   <div class="page-header">
     <div id="demoBanner" style="display:none; background:#FFF8ED; border-radius:10px; padding:10px 20px; margin-bottom:20px; font-family:'Quick',sans-serif; font-size:10px; text-transform:uppercase; letter-spacing:2px; color:#B8860B;">
       ⚡ Demo Mode — Using sample responses. Live AI feedback active when embedded in Kajabi.
+      <button onclick="fillDemoPost()" style="margin-left:12px; font-family:'Quick',sans-serif; font-size:10px; text-transform:uppercase; letter-spacing:2px; padding:5px 12px; border-radius:20px; border:1px solid #B8860B; background:#fff; color:#B8860B; cursor:pointer;">Fill Test Post</button>
     </div>
     <div class="page-tagline">Simple Creator Co.</div>
     <h1 class="page-title">The Post Lab</h1>
@@ -571,7 +587,7 @@ body { background: var(--color-bg); font-family: 'Nunito', sans-serif; color: va
       </div>
 
       <div id="assessmentContent" style="display:none;">
-        <div class="confidence-section">
+        <div class="confidence-section" id="confidenceSection">
           <div class="confidence-label">Confidence Score</div>
           <div class="confidence-score" id="overallScore">—</div>
           <div class="confidence-goal" id="scoreGoalText"></div>
@@ -583,6 +599,12 @@ body { background: var(--color-bg); font-family: 'Nunito', sans-serif; color: va
           </div>
         </div>
 
+        <div id="scoreDisclaimer" style="display:none; font-size:13px; font-style:italic; color:#999; max-width:520px; margin:-12px auto 28px; line-height:1.6; text-align:center;">A 100 means this post follows the framework completely. It does not guarantee views or sales. The algorithm, your timing, and your audience decide that, and no tool can control those. What a 100 does mean is that when the right person sees it, nothing in the post is getting in the way.</div>
+
+        <div class="assessment-section" id="whatYouFixedSection" style="display:none;">
+          <div class="assessment-section-title">What You Fixed</div>
+          <div id="whatYouFixed"></div>
+        </div>
         <div class="assessment-section">
           <div class="assessment-section-title">What's Working</div>
           <div id="whatsWorking"></div>
@@ -914,9 +936,11 @@ function proceedToAssessment() {
 }
 
 // ══ API ══
-async function callClaude(system, user, maxTokens) {
+async function callClaude(system, user, maxTokens, temperature) {
   if(IS_DEMO){await new Promise(r=>setTimeout(r,1400));return '__DEMO__';}
-  const res=await fetch('https://post-lab.black-bread-143b.workers.dev',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:maxTokens||1000,system,messages:[{role:'user',content:user}]})});
+  const body={model:'claude-sonnet-4-6',max_tokens:maxTokens||1000,system,messages:[{role:'user',content:user}]};
+  if(typeof temperature==='number') body.temperature=temperature;
+  const res=await fetch('https://post-lab.black-bread-143b.workers.dev',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
   const data=await res.json();
   if(data.error) throw new Error(data.error.message);
   return data.content[0].text;
@@ -1024,37 +1048,178 @@ async function regenerateCaption() {
 }
 
 // ══ FULL ASSESSMENT ══
+// ══ RUBRIC (single source of truth for scoring) ══
+const RUBRIC = {
+  hook: [
+    {id:'h1', pts:25, label:'Names a specific person, problem, or number'},
+    {id:'h2', pts:25, label:'Creates a gap the viewer wants closed'},
+    {id:'h3', pts:25, label:'Clear over clever, instantly understood on a phone'},
+    {id:'h4', pts:25, label:'Matches the job of this post type'}
+  ],
+  cta: [
+    {id:'c1', pts:30, label:'Exactly one action (comment keyword, DM word, or link in bio)'},
+    {id:'c2', pts:30, label:'Names what they get for taking the action'},
+    {id:'c3', pts:20, label:'Keyword or instruction is specific and easy to follow'},
+    {id:'c4', pts:20, label:'Connects to what the hook and caption promised'}
+  ],
+  caption: [
+    {id:'p1', pts:30, label:'Follows the required structure for this post type'},
+    {id:'p2', pts:25, label:'Specific details, not vague claims'},
+    {id:'p3', pts:25, label:'Extends the hook instead of restating it'},
+    {id:'p4', pts:20, label:'Short paragraphs, first person, ends with the CTA'}
+  ]
+};
+const ALL_CRITERIA = [...RUBRIC.hook, ...RUBRIC.cta, ...RUBRIC.caption];
+const ELEMENT_OF = {}; ALL_CRITERIA.forEach(cr => ELEMENT_OF[cr.id] = cr.id[0]==='h'?'hook':cr.id[0]==='c'?'cta':'caption');
+
 function buildAssessmentPrompts(isReanalysis) {
   const carousel=isCarousel(), g=captionStructureText();
-  const offerCtx=[S.identity&&`Creator: ${S.identity}`,S.audience&&`Audience: ${S.audience}`,S.product&&`Offer: ${S.product}`,S.proof&&`Proof: ${S.proof}`].filter(Boolean).join('\n');
-  const prevScore=S.assessment?S.assessment.overallScore:null;
+  const offerCtx=[S.identity&&`Creator: ${S.identity}`,S.audience&&`Audience: ${S.audience}`,S.product&&`Offer: ${S.product}`,S.proof&&`Proof/story: ${S.proof}`].filter(Boolean).join('\n');
+  const prev=isReanalysis?S.prevSnapshot:null;
+  const structure=g?g.label+' — '+g.text.replace(/<[^>]+>/g,''):'deliver on the hook\'s promise with the correct structure';
 
-  const system=`You are a framework evaluator for Rebecca's Instagram Sales Page System course at Simple Creator Co. Evaluate a completed Instagram post against Rebecca's framework. Be specific — reference the actual content, not just the framework.
+  const h4ByType={
+    qualifier:'For a Qualifier, the hook names the specific person it is for. That alone meets h4.',
+    objection:'For an Objection Crusher, the hook states the objection the viewer believes. That alone meets h4.',
+    proof:'For a Proof Post, the hook contains a result or a relatable identity. That alone meets h4.',
+    curiosity:'For a Curiosity Gap, the hook teases an insight without resolving it. That alone meets h4.',
+    pin1:'For Pin 1, the hook pairs a result with a relatable identity. That alone meets h4.',
+    pin2:'For Pin 2, the hook promises a process or steps. That alone meets h4.',
+    pin3:'For Pin 3, the hook points at a lifestyle or emotional outcome, not just a number. That alone meets h4.'
+  };
+  const rubricText=`RUBRIC. Judge each criterion as "met", "partial", or "unmet". You do NOT output scores; the tool computes them from your judgments.
+
+HOW TO JUDGE. Read each criterion literally. Judge ONLY what it says. Do not add requirements the framework does not state. Rebecca's framework values simple and clear over polished and complete: a short post that meets the criterion is "met", and you must not ask for more length, more detail, or more emotion than the criterion requires. Default to "met". Mark "partial" or "unmet" only when you can quote their text and point to a plain gap. If you would have to argue that it is "not quite enough", it is met.
+
+HOOK (${carousel?'Slide 1':'first frame'}):
+  h1 (25) Names a specific person, problem, or number. ANY ONE of the three meets it. "Teachers" is a person. "Moms who work nights" is a person. Only a hook with no person, no problem, and no number is unmet.
+  h2 (25) Creates a gap: after reading it, the viewer wants to know what comes next. Met if the hook implies there is more to hear.
+  h3 (25) Clear over clever: a stranger understands it in one read. Unmet only for puns, vague metaphors, or jargon.
+  h4 (25) Matches the job of this post type. ${h4ByType[S.purpose]||'Met if the hook fits the purpose.'}
+
+CTA (${carousel?'last slide':'end of caption'}):
+  c1 (30) Exactly one action: comment keyword, DM word, or link in bio. Two different asks = unmet. One ask = met.
+  c2 (30) Names what they get. "The link", "the kit", "the guide" all count. Unmet only if nothing is promised.
+  c3 (20) The keyword or instruction is specific and easy to follow. A single clear word in caps meets it.
+  c4 (20) Connects to what the hook and caption promised. Met unless the CTA is about something unrelated.
+
+CAPTION (${carousel?'middle slides':'main content'}):
+  p1 (30) Follows the required structure: ${structure}. Met if the parts are present in order, however brief.
+  p2 (25) Contains at least ONE concrete detail: a number, a timeframe, a count, a price, a named thing. ONE detail meets it. Do not ask for more.${S.hasProof?'':' This creator has no results yet: do NOT require results. A specific audience, situation, or mechanism satisfies this.'}
+  p3 (25) Adds something the hook did not already say. Met unless the caption only repeats the hook.
+  p4 (20) Short paragraphs, first person, ends with the CTA. Met if all three are true.
+
+For every criterion that is "partial" or "unmet", give two things:
+  "note": one sentence naming exactly what is missing from THEIR text (quote their words).
+  "suggestion": the rewritten line or sentence, ready to paste. Written in the creator's voice, using their identity, audience, offer, and story. Not a description of a fix. The actual words.
+  Never say "lean into", "strengthen", "make it more", or "consider". Show them the line.
+  If ONE rewrite fixes more than one criterion (common: h1 and h4 both fixed by the same hook), use the IDENTICAL "suggestion" text for each of them so the tool can show them as one edit.
+For "met" criteria, leave both empty.
+
+THE GOAL: 85 overall is the minimum for a post that is ready to record. Higher is better. The creator will keep editing until every criterion is met, so your judgments must be consistent: the same text always gets the same judgment.`;
+
+  const consistency=prev?`
+RE-ANALYSIS RULES. This is a revision of a post you already graded.
+
+Your previous judgments:
+${ALL_CRITERIA.map(cr=>`  ${cr.id}: ${(prev.assessment.criteria&&prev.assessment.criteria[cr.id]&&prev.assessment.criteria[cr.id].status)||'unknown'}`).join('\n')}
+
+1. Compare BEFORE and AFTER for each element and identify exactly what changed.
+2. Criteria on elements that did NOT change keep your previous judgment. Do not re-judge them.
+3. On elements that DID change: a criterion may move up (unmet to partial, partial to met). It may only move DOWN if the creator introduced a new problem, and then you must name it in "regressions".
+4. If the creator's edit was aimed at a fix you asked for, give them credit for it.`:'';
+
+  const system=`You are a framework evaluator for Rebecca's Instagram Sales Page System course at Simple Creator Co. You grade Instagram posts against Rebecca's framework using a fixed rubric.
 
 ${isPinned()?`Pinned post context: ${pinnedContext()}`:''}
 ${carousel?'Carousel: Slide 1 = hook, middle slides = caption, last slide = CTA.':''}
 ${offerCtx?`Creator context:\n${offerCtx}`:''}
-${isReanalysis&&prevScore?`Previous score: ${prevScore}/100. The creator has made edits based on your feedback. Evaluate the revised content carefully — only adjust the score if the content has genuinely improved or worsened. Do not re-score downward simply because this is a fresh evaluation. Be consistent.`:''}
 
-Framework rules:
-- Hook (${carousel?'Slide 1':'first frame'}): name specific person/problem/number, create knowledge gap, clear over clever
-- Caption (${carousel?'middle slides':'main content'}): ${g?g.label+' — '+g.text.replace(/<[^>]+>/g,''):'deliver on hook\'s promise with correct structure'}
-- CTA (${carousel?'last slide':'end'}): one specific action — comment keyword, DM trigger, or link in bio
-- Proof specificity: vague numbers ("a lot", "significantly") are weak; exact numbers are strong
-- Scoring must be consistent — a post that scored ${prevScore||'well'} previously should score similarly unless specific elements have changed
-- Goal: 85+ overall
+${rubricText}
+${consistency}
 
-Respond in JSON only. No markdown:
-{"hookScore":0-100,"ctaScore":0-100,"captionScore":0-100,"overallScore":0-100,"whatsWorking":[{"point":"max 8 words","detail":"1-2 sentences"}],"whatToTighten":[{"point":"max 8 words","detail":"1-2 sentences actionable fix"}]}
-whatsWorking: 2-3 items. whatToTighten: 1-3 items (0 if score 90+).`;
+Respond in JSON only. No markdown, no preamble:
+{"criteria":{"h1":{"status":"met|partial|unmet","note":"what is missing, quoting their text, or empty","suggestion":"the rewritten line ready to paste, or empty"},"h2":{...},"h3":{...},"h4":{...},"c1":{...},"c2":{...},"c3":{...},"c4":{...},"p1":{...},"p2":{...},"p3":{...},"p4":{...}},"whatsWorking":[{"point":"max 8 words","detail":"1-2 sentences"}],"regressions":[{"point":"max 8 words","detail":"what was removed or broken"}]}
+whatsWorking: 2-3 items. regressions: empty array unless a re-analysis and the creator broke something.`;
+
+  const before=prev?`
+BEFORE (previous version):
+${carousel?'Slide 1 (Hook)':'Hook'}: "${prev.hook}"
+${carousel?'Last Slide (CTA)':'CTA'}: "${prev.cta}"
+${carousel?'Middle Slides (Caption)':'Caption'}: "${prev.caption}"
+
+AFTER (current version):`:'';
 
   const user=`Post: ${isPinned()?purposeLabel(S.purpose)+' (Pinned)':'Feed Post — '+purposeLabel(S.purpose)}. Format: ${formatLabel(S.format)}.
-
+${before}
 ${carousel?'Slide 1 (Hook)':'Hook'}: "${S.hook}"
 ${carousel?'Last Slide (CTA)':'CTA'}: "${S.cta}"
 ${carousel?'Middle Slides (Caption)':'Caption'}: "${S.caption}"`;
 
   return {system, user};
+}
+
+// ══ SCORE ENGINE ══
+// Scores are computed here, never by the AI, so the number and the tighten list always agree.
+const STATUS_RANK={unmet:0,partial:1,met:2};
+function ptsFor(cr,status){return status==='met'?cr.pts:status==='partial'?Math.round(cr.pts/2):0;}
+
+function normalizeAssessment(result, prev) {
+  const criteria={};
+  ALL_CRITERIA.forEach(cr=>{
+    const raw=(result.criteria&&result.criteria[cr.id])||{};
+    let status=String(raw.status||'').toLowerCase();
+    if(!(status in STATUS_RANK)) status='unmet';
+    criteria[cr.id]={status,note:String(raw.note||'').trim(),suggestion:String(raw.suggestion||'').trim()};
+  });
+  result.whatsWorking=Array.isArray(result.whatsWorking)?result.whatsWorking:[];
+  result.regressions=Array.isArray(result.regressions)?result.regressions:[];
+  result.addressed=[];
+
+  if(prev&&prev.assessment&&prev.assessment.criteria){
+    const pc=prev.assessment.criteria;
+    const changed={
+      hook: S.hook.trim()!==prev.hook.trim(),
+      cta: S.cta.trim()!==prev.cta.trim(),
+      caption: S.caption.trim()!==prev.caption.trim()
+    };
+    const noRegressions=result.regressions.length===0;
+    ALL_CRITERIA.forEach(cr=>{
+      const el=ELEMENT_OF[cr.id];
+      const prevStatus=(pc[cr.id]&&pc[cr.id].status)||'unmet';
+      if(!changed[el]){
+        // Unchanged element: keep the previous judgment exactly.
+        criteria[cr.id]={status:prevStatus,note:(pc[cr.id]&&pc[cr.id].note)||criteria[cr.id].note,suggestion:(pc[cr.id]&&pc[cr.id].suggestion)||criteria[cr.id].suggestion};
+      } else if(noRegressions&&STATUS_RANK[criteria[cr.id].status]<STATUS_RANK[prevStatus]){
+        // Changed element, no named regression: never let a criterion slide backwards.
+        criteria[cr.id].status=prevStatus;
+      }
+      if(STATUS_RANK[criteria[cr.id].status]>STATUS_RANK[prevStatus]){
+        result.addressed.push(cr.label);
+      }
+    });
+  }
+
+  const sum=el=>RUBRIC[el].reduce((t,cr)=>t+ptsFor(cr,criteria[cr.id].status),0);
+  result.criteria=criteria;
+  result.hookScore=sum('hook');
+  result.ctaScore=sum('cta');
+  result.captionScore=sum('caption');
+  result.overallScore=Math.round((result.hookScore+result.ctaScore+result.captionScore)/3);
+
+  // Tighten list is derived, not authored: every unmet or partial criterion, biggest points first.
+  result.whatToTighten=ALL_CRITERIA
+    .filter(cr=>criteria[cr.id].status!=='met')
+    .map(cr=>({
+      point:cr.label,
+      detail:criteria[cr.id].note||('Not yet met: '+cr.label+'.'),
+      suggestion:criteria[cr.id].suggestion,
+      points:cr.pts-ptsFor(cr,criteria[cr.id].status),
+      element:ELEMENT_OF[cr.id],
+      partial:criteria[cr.id].status==='partial'
+    }))
+    .sort((a,b)=>b.points-a.points);
+  return result;
 }
 
 async function runFullAssessment() {
@@ -1063,10 +1228,12 @@ async function runFullAssessment() {
   document.getElementById('assessmentContent').style.display='none';
   document.getElementById('scoreBar').style.width='0%';
 
+  S.prevSnapshot=null;
   const {system,user}=buildAssessmentPrompts(false);
   try {
-    const raw=await callClaude(system,user,1000);
-    const result=raw==='__DEMO__'?demoAssessment():JSON.parse(raw.replace(/```json|```/g,'').trim());
+    const raw=await callClaude(system,user,1200,0);
+    let result=raw==='__DEMO__'?demoAssessment():JSON.parse(raw.replace(/```json|```/g,'').trim());
+    result=normalizeAssessment(result,null);
     S.assessment=result;
     renderAssessment(result);
   } catch(e) {
@@ -1077,13 +1244,20 @@ async function runFullAssessment() {
 }
 
 function demoAssessment() {
-  return {hookScore:88,ctaScore:90,captionScore:82,overallScore:87,
+  const m=(s,n,sg)=>({status:s,note:n||'',suggestion:sg||''});
+  return {criteria:{
+      h1:m('unmet','"Want to make money from your lesson plans?" has no specific person, problem, or number in it. Anyone could scroll past it.','If you\'re a teacher with a folder of printables you made yourself, this is for you'),
+      h2:m('met'),h3:m('met'),
+      h4:m('unmet','A Qualifier hook names the specific person it is for. Right now the hook is a question to everyone.','If you\'re a teacher with a folder of printables you made yourself, this is for you'),
+      c1:m('met'),c2:m('met'),c3:m('met'),c4:m('met'),
+      p1:m('met'),p2:m('met'),p3:m('met'),p4:m('met')
+    },
     whatsWorking:[
-      {point:'Hook names a specific person and situation',detail:'The hook stops the right scroll by naming a specific identity in a specific moment — exactly what Rebecca\'s framework calls for.'},
-      {point:'CTA connects cleanly to the funnel',detail:'The trigger is specific and names a clear value exchange. This is the correct structure for activating ManyChat.'},
-      {point:'Caption delivers on the hook\'s promise',detail:'The caption follows the correct structure for this post type and adds a layer the video can\'t deliver alone.'}
+      {point:'CTA is one clear action with a reward',detail:'One keyword, one thing they get. Nothing to fix here.'},
+      {point:'Caption has real numbers',detail:'"$27", "four times", "$412", "340 followers". That is the specificity the framework asks for.'},
+      {point:'Caption ends on the CTA',detail:'Short paragraphs, first person, trigger on the last line.'}
     ],
-    whatToTighten:[{point:'Caption needs one more specific detail',detail:'Specificity is the strategy. One more concrete detail — a number, a timeline, or a relatable moment — would push the caption score above 90.'}]};
+    regressions:[]};
 }
 
 function renderAssessment(result) {
@@ -1094,12 +1268,49 @@ function renderAssessment(result) {
   scoreEl.textContent=score; scoreEl.className='confidence-score '+tier;
   barEl.className='confidence-bar-fill '+tier;
   setTimeout(()=>{barEl.style.width=Math.min(score,100)+'%';},100);
-  document.getElementById('scoreGoalText').textContent=score>=85?'This post meets the 85+ framework threshold. Ready to record.':score>=65?'Getting closer — use the feedback below to reach 85+.':'This post needs work. Focus on the tighten notes below.';
+  document.getElementById('scoreGoalText').textContent=score>=100?'🎉 100! Every single criterion met. Go record this one!':score>=95?'Top of the framework. Ready to record.':score>=85?'You cleared 85. Ready to record, and there is still room to climb.':score>=65?'Getting closer. Use the tighten notes below to reach 85.':'Not ready yet. Work through the tighten notes below to reach 85.';
+  document.getElementById('scoreDisclaimer').style.display=score>=100?'block':'none';
+  document.getElementById('confidenceSection').classList.toggle('perfect',score>=100);
+  if(score>=100) setTimeout(fireConfetti,250);
   document.getElementById('hookScore').textContent=result.hookScore;
   document.getElementById('ctaScore').textContent=result.ctaScore;
   document.getElementById('captionScore').textContent=result.captionScore;
   document.getElementById('whatsWorking').innerHTML=result.whatsWorking.map(w=>`<div class="feedback-card feedback-positive"><div class="feedback-label">✓ ${esc(w.point)}</div><div class="feedback-text">${esc(w.detail)}</div></div>`).join('');
-  document.getElementById('whatToTighten').innerHTML=result.whatToTighten.length?result.whatToTighten.map(t=>`<div class="feedback-card feedback-warning"><div class="feedback-label">⚡ ${esc(t.point)}</div><div class="feedback-text">${esc(t.detail)}</div></div>`).join(''):'<div class="feedback-card feedback-positive"><div class="feedback-text">No major tighten notes — this post is framework-ready.</div></div>';
+  // Merge criteria that share the same fix into one card
+  const groups=[];
+  [...result.whatToTighten].forEach(t=>{
+    const key=t.suggestion?t.element+'|'+t.suggestion.trim():t.element+'|'+t.point;
+    let gr=groups.find(x=>x.key===key);
+    if(!gr){gr={key,element:t.element,suggestion:t.suggestion,points:0,items:[]};groups.push(gr);}
+    gr.points+=Number(t.points)||0;
+    gr.items.push(t);
+  });
+  groups.sort((a,b)=>b.points-a.points);
+  const elName={hook:isCarousel()?'Slide 1 (Hook)':'Hook',cta:isCarousel()?'Last Slide (CTA)':'CTA',caption:isCarousel()?'Middle Slides (Caption)':'Caption'};
+  const tightenIntro=score>=85?'<p style="font-size:14px;color:#999;margin-bottom:12px;">You\'ve cleared 85. These are the points still on the table if you want to push higher.</p>':'';
+  document.getElementById('whatToTighten').innerHTML=groups.length?tightenIntro+groups.map(gr=>{
+    const pts=`<span style="background:#fff;border-radius:20px;padding:2px 10px;margin-left:8px;font-size:10px;white-space:nowrap;">+${gr.points}</span>`;
+    const title=gr.items.length===1?esc(gr.items[0].point):esc(elName[gr.element]||gr.element)+': one edit fixes '+gr.items.length+' things';
+    const body=gr.items.length===1
+      ?`<div class="feedback-text">${esc(gr.items[0].detail)}</div>`
+      :`<ul class="tighten-list">${gr.items.map(t=>`<li><strong>${esc(t.point)}.</strong> ${esc(t.detail)}</li>`).join('')}</ul>`;
+    const sug=gr.suggestion?`<div class="suggestion-box"><div class="suggestion-label">Try this</div><div class="suggestion-text">${esc(gr.suggestion)}</div></div>`:'';
+    return `<div class="feedback-card feedback-warning"><div class="feedback-label">⚡ ${title}${pts}</div>${body}${sug}</div>`;
+  }).join(''):'<div class="feedback-card feedback-positive"><div class="feedback-text">Every rubric criterion is met. This is as strong as the framework can score it.</div></div>';
+
+  // What You Fixed (only after a re-analysis)
+  const fixedSection=document.getElementById('whatYouFixedSection');
+  const fixed=(result.addressed||[]).filter(Boolean);
+  const regressions=result.regressions||[];
+  if(fixed.length||regressions.length){
+    fixedSection.style.display='block';
+    document.getElementById('whatYouFixed').innerHTML=
+      fixed.map(a=>`<div class="feedback-card feedback-positive"><div class="feedback-label">✓ Fixed: ${esc(a)}</div></div>`).join('')+
+      regressions.map(r=>`<div class="feedback-card feedback-negative"><div class="feedback-label">↓ ${esc(r.point)}</div><div class="feedback-text">${esc(r.detail)}</div></div>`).join('');
+  } else {
+    fixedSection.style.display='none';
+    document.getElementById('whatYouFixed').innerHTML='';
+  }
 
   // Populate post document
   const carousel=isCarousel();
@@ -1156,6 +1367,8 @@ async function reanalyzeFromEdit() {
   const cta=document.getElementById('editCta').value.trim()||document.getElementById('docCtaText').textContent.trim();
   const caption=document.getElementById('editCaption').value.trim()||document.getElementById('docCaptionText').textContent.trim();
   if(!hook||!cta||!caption){alert('All three fields must have content to re-analyze.');return;}
+  // Snapshot what the AI saw last time so it can diff and be held to its own feedback
+  S.prevSnapshot={hook:S.hook,cta:S.cta,caption:S.caption,assessment:S.assessment};
   S.hook=hook; S.cta=cta; S.caption=caption;
   _editedFields.clear();
   // Close any open edit panels
@@ -1169,15 +1382,17 @@ async function reanalyzeFromEdit() {
   window.scrollTo({top:0,behavior:'smooth'});
   const {system,user}=buildAssessmentPrompts(true);
   try {
-    const raw=await callClaude(system,user,1000);
+    const raw=await callClaude(system,user,1200,0);
     let result;
     if(raw==='__DEMO__'){
-      const prev=S.assessment?S.assessment.overallScore:80;
-      const ns=Math.min(99,prev+Math.floor(Math.random()*5)+2);
-      result={hookScore:ns-1,ctaScore:ns+1,captionScore:ns-2,overallScore:ns,whatsWorking:[{point:'Edits improved clarity and specificity',detail:'The revised version is tighter — the right person will feel this was written specifically for them.'},{point:'CTA remains clear and actionable',detail:'The trigger maps cleanly to ManyChat and names a specific value exchange.'}],whatToTighten:ns>=85?[]:[{point:'Keep refining hook specificity',detail:'One more concrete detail in the hook would push this above 85.'}]};
+      const p=S.prevSnapshot.assessment;
+      const crit={};
+      ALL_CRITERIA.forEach(cr=>{crit[cr.id]={status:'met',note:''};});
+      result={criteria:crit,whatsWorking:p.whatsWorking,regressions:[]};
     } else {
       result=JSON.parse(raw.replace(/```json|```/g,'').trim());
     }
+    result=normalizeAssessment(result,S.prevSnapshot);
     S.assessment=result; renderAssessment(result);
   } catch(e) {
     document.getElementById('assessmentLoading').style.display='none';
@@ -1225,7 +1440,10 @@ function loadSaved(id) {
   if(!post) return;
   S.postType=post.postType;S.format=post.format;S.purpose=post.purpose;
   S.hook=post.hook;S.cta=post.cta;S.caption=post.caption;
-  S.assessment=post.assessment||{overallScore:post.score,hookScore:post.score,ctaScore:post.score,captionScore:post.score,whatsWorking:[],whatToTighten:[]};
+  S.assessment=post.assessment||{overallScore:post.score,hookScore:post.score,ctaScore:post.score,captionScore:post.score,whatsWorking:[],whatToTighten:[],addressed:[],regressions:[]};
+  if(!S.assessment.addressed) S.assessment.addressed=[];
+  if(!S.assessment.regressions) S.assessment.regressions=[];
+  S.prevSnapshot=null;
   document.querySelectorAll('#postTypeGrid .type-card').forEach(c=>c.classList.toggle('selected',c.dataset.value===post.postType));
   updatePurposeGrid();
   const purposeCard=document.querySelector(`#purposeGrid [data-value="${post.purpose}"]`);
@@ -1256,7 +1474,7 @@ function toggleSidebar(){
 
 // ══ START OVER ══
 function startOver() {
-  Object.assign(S,{postType:'feed',format:'broll',purpose:'qualifier',identity:'',audience:'',product:'',proof:'',hasProof:true,hook:'',cta:'',caption:'',captionMode:'write',assessment:null});
+  Object.assign(S,{postType:'feed',format:'broll',purpose:'qualifier',identity:'',audience:'',product:'',proof:'',hasProof:true,hook:'',cta:'',caption:'',captionMode:'write',assessment:null,prevSnapshot:null});
   document.querySelectorAll('#postTypeGrid .type-card').forEach(c=>c.classList.toggle('selected',c.dataset.value==='feed'));
   updatePurposeGrid();
   ['offerIdentity','offerAudience','offerProduct','offerProof','hookInput','ctaInput','captionInput','captionGenerated'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
@@ -1302,6 +1520,73 @@ function loadOffer() {
 ['offerIdentity','offerAudience','offerProduct','offerProof'].forEach(id => {
   document.getElementById(id).addEventListener('input', saveOffer);
 });
+
+// ══ CONFETTI ══
+function fireConfetti() {
+  const canvas=document.getElementById('confettiCanvas');
+  const ctx=canvas.getContext('2d');
+  canvas.width=window.innerWidth; canvas.height=window.innerHeight;
+  canvas.style.display='block';
+  const colors=['#F49C8E','#F3B548','#BFD9CC','#F6D5CD','#B3DCDA','#889CA2'];
+  const pieces=[];
+  for(let i=0;i<180;i++){
+    pieces.push({
+      x:canvas.width*(0.3+Math.random()*0.4),
+      y:canvas.height*0.35,
+      vx:(Math.random()-0.5)*18,
+      vy:-(Math.random()*16+8),
+      w:6+Math.random()*6, h:8+Math.random()*8,
+      rot:Math.random()*Math.PI, vr:(Math.random()-0.5)*0.3,
+      color:colors[Math.floor(Math.random()*colors.length)],
+      life:0
+    });
+  }
+  let frame=0;
+  function tick(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    let alive=0;
+    pieces.forEach(p=>{
+      p.vy+=0.45; p.x+=p.vx; p.y+=p.vy; p.vx*=0.99; p.rot+=p.vr; p.life++;
+      if(p.y<canvas.height+20){alive++;}
+      ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.rot);
+      ctx.globalAlpha=Math.max(0,1-(p.life/160));
+      ctx.fillStyle=p.color; ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h);
+      ctx.restore();
+    });
+    frame++;
+    if(alive>0&&frame<200) requestAnimationFrame(tick);
+    else { ctx.clearRect(0,0,canvas.width,canvas.height); canvas.style.display='none'; }
+  }
+  tick();
+}
+
+// ══ DEMO FILL ══
+function fillDemoPost() {
+  // Setup: feed post, qualifier, b-roll
+  document.querySelectorAll('#postTypeGrid .type-card').forEach(x=>x.classList.toggle('selected',x.dataset.value==='feed'));
+  S.postType='feed'; updatePurposeGrid();
+  const q=document.querySelector('#purposeGrid [data-value="qualifier"]'); if(q) selectPurpose(q);
+  document.getElementById('formatSelect').value='broll'; S.format='broll';
+
+  // Offer
+  document.getElementById('offerIdentity').value='Mom of 3, former elementary teacher';
+  document.getElementById('offerAudience').value='Teachers who want to make money from their lesson plans without leaving the classroom';
+  document.getElementById('offerProduct').value='$27 Classroom Printables Starter Kit';
+  setProofMode('yes');
+  document.getElementById('offerProof').value='Made $412 in my first month with 340 followers';
+  saveOffer();
+
+  // Hook / CTA / Caption
+  document.getElementById('hookInput').value='Want to make money from your lesson plans?';
+  document.getElementById('ctaInput').value='Comment PRINTABLES and I\'ll send you the starter kit link';
+  setCaptionMode('write');
+  document.getElementById('captionInput').value='I was you two years ago. Grading papers at the kitchen table, wondering if the stuff I made for my own classroom could actually be worth something to someone else.\n\nTurns out it was. I put three of my printables into one $27 kit, posted about it four times, and made $412 that first month with 340 followers.\n\nNot life changing money. But it was proof that teachers will pay for things made by other teachers.\n\nYou don\'t need a huge audience. You need one thing you already made and a way for people to grab it.\n\nComment PRINTABLES and I\'ll send you the starter kit link';
+
+  // Jump to caption step, ready to analyze
+  S.currentStep=4;
+  goToStep(5);
+  checkCaptionReady();
+}
 
 // ══ INIT ══
 renderSidebar();
