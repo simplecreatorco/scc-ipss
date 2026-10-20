@@ -722,18 +722,21 @@ async function sheetsCall(payload) {
   });
   const text = await res.text();
   // Apps Script sometimes returns HTML on redirect — try JSON first
-  try {
-    const data = JSON.parse(text);
+  let data = null;
+  try { data = JSON.parse(text); } catch (e) { /* not JSON */ }
+
+  if (data) {
+    // Real JSON response — surface real errors instead of masking them
     if (data.error) throw new Error(data.error);
     return data;
-  } catch (e) {
-    // If it's an HTML page but the status was 200, the save likely went through
-    // (Apps Script redirect quirk). For write actions, treat as success.
-    if (res.ok && ['save_user_setup','save_daily_log','save_sale','update_user_setup','update_daily_log','update_sale','clear_user_data','delete_daily_log','delete_sale'].includes(payload.action)) {
-      return { success: true, id: 'gs-' + Date.now() };
-    }
-    throw new Error('Unexpected response from server');
   }
+
+  // Non-JSON (HTML redirect quirk): if status was OK and this was a write, the
+  // operation almost certainly went through — treat as success.
+  if (res.ok && ['save_user_setup','save_daily_log','save_sale','update_user_setup','update_daily_log','update_sale','clear_user_data','delete_daily_log','delete_sale'].includes(payload.action)) {
+    return { success: true, id: 'gs-' + Date.now() };
+  }
+  throw new Error('Unexpected response from server');
 }
 
 // Loading overlay helpers
@@ -812,21 +815,28 @@ async function checkExistingUser() {
   showEmailGate();
 }
 
+function isoDay(v) {
+  // Normalize any date value (ISO datetime, date string) to YYYY-MM-DD
+  if (!v) return '';
+  const s = v.toString();
+  return s.length >= 10 ? s.slice(0, 10) : s;
+}
+
 function hydrateState(email, data) {
   state.email = email;
   state.products = data.products || [];
   state.campaigns = data.campaigns || [];
   state.dailyLogs = (data.daily_logs || []).map(log => ({
     id: log.id,
-    date: log.date,
+    date: isoDay(log.date),
     campaignName: log.campaign_name,
     campaignType: log.campaign_type,
     ...log.data
   }));
   state.sales = (data.sales || []).map(s => ({
     id: s.id,
-    date: formatDateDisplay(s.date),
-    rawDate: s.date,
+    date: formatDateDisplay(isoDay(s.date)),
+    rawDate: isoDay(s.date),
     buyer: s.buyer,
     campaign: s.campaign,
     products: s.products || [],
@@ -898,7 +908,7 @@ async function submitEmailGate() {
 // ─────────────────────────────────────────────
 
 // ── STATE ──
-let state={products:[],campaigns:[],hasTraffic:false,hasDtp:false};
+let state={products:[],campaigns:[],hasTraffic:false,hasDtp:false,dailyLogs:[],sales:[]};
 let upsellCount=0;
 let campEntryCount=0;
 let modalSelectedType='';
@@ -1229,7 +1239,7 @@ function saveSaleEntry(){
     email: state.email,
     ...saleData
   }).then(result => {
-    state.sales.push({
+    (state.sales=state.sales||[]).push({
       id: result.id,
       date: formatDateDisplay(saleData.date),
       rawDate: saleData.date,
@@ -1515,9 +1525,9 @@ function setMetric(gridId, index, value, sub) {
 // RENDER IG TAB
 // ─────────────────────────────────────────────
 function renderIgTab() {
-  const trafficLogs = getLogsForType('traffic').sort((a,b) => a.date.localeCompare(b.date));
-  const engageLogs = getLogsForType('engage').sort((a,b) => a.date.localeCompare(b.date));
-  const allIgLogs = [...trafficLogs, ...engageLogs].sort((a,b) => a.date.localeCompare(b.date));
+  const trafficLogs = getLogsForType('traffic').sort((a,b) => (a.date||"").localeCompare(b.date||""));
+  const engageLogs = getLogsForType('engage').sort((a,b) => (a.date||"").localeCompare(b.date||""));
+  const allIgLogs = [...trafficLogs, ...engageLogs].sort((a,b) => (a.date||"").localeCompare(b.date||""));
 
   if (allIgLogs.length === 0) return; // keep empty states
 
@@ -1668,7 +1678,7 @@ function igDiagnostic(answer) {
 function renderIgLogTable(trafficLogs, engageLogs) {
   const area = document.getElementById('traffic-log-area');
   if (!area) return;
-  const allLogs = [...trafficLogs, ...engageLogs].sort((a,b) => b.date.localeCompare(a.date));
+  const allLogs = [...trafficLogs, ...engageLogs].sort((a,b) => (b.date||"").localeCompare(a.date||""));
   if (allLogs.length === 0) return;
 
   const rows = allLogs.map(log => {
@@ -1707,7 +1717,7 @@ function renderIgLogTable(trafficLogs, engageLogs) {
 // RENDER DTP TAB
 // ─────────────────────────────────────────────
 function renderDtpTab() {
-  const logs = getLogsForType('dtp').sort((a,b) => a.date.localeCompare(b.date));
+  const logs = getLogsForType('dtp').sort((a,b) => (a.date||"").localeCompare(b.date||""));
   if (logs.length === 0) return;
 
   // ── Metrics — all on 7-day window ──
@@ -1788,7 +1798,7 @@ function renderDtpInsight(logs, roas7, totalSpend, cvr, avgCtr) {
 function renderDtpLogTable(logs) {
   const area = document.getElementById('dtp-log-area');
   if (!area) return;
-  const sorted = [...logs].sort((a,b) => b.date.localeCompare(a.date));
+  const sorted = [...logs].sort((a,b) => (b.date||"").localeCompare(a.date||""));
 
   const rows = sorted.map(log => {
     const spent = getSpent(log);
@@ -1825,7 +1835,7 @@ function renderChart(areaId, logs, sales) {
   const area = document.getElementById(areaId);
   if (!area || logs.length < 2) return;
 
-  const sorted = [...logs].sort((a,b) => a.date.localeCompare(b.date));
+  const sorted = [...logs].sort((a,b) => (a.date||"").localeCompare(b.date||""));
   const dates = [...new Set(sorted.map(l => l.date))];
   if (dates.length < 2) return;
 
@@ -1882,7 +1892,7 @@ function renderChart(areaId, logs, sales) {
 function renderBudgetTimeline(areaId, logs) {
   const area = document.getElementById(areaId);
   if (!area) return;
-  const sorted = [...logs].sort((a,b) => a.date.localeCompare(b.date));
+  const sorted = [...logs].sort((a,b) => (a.date||"").localeCompare(b.date||""));
 
   // Find budget changes
   const changes = [];
@@ -1921,15 +1931,36 @@ function renderSalesLog(areaId) {
 
   area.innerHTML = `<div style="overflow-x:auto;">
     <table class="log-table">
-      <thead><tr><th>Date</th><th>Buyer</th><th>Products</th><th>Amount</th></tr></thead>
+      <thead><tr><th>Date</th><th>Buyer</th><th>Products</th><th>Amount</th><th></th></tr></thead>
       <tbody>${sorted.map(s => `<tr>
         <td>${s.date || s.rawDate || ''}</td>
         <td style="color:var(--body);font-size:12px;">${s.buyer || '—'}</td>
         <td style="font-size:11px;color:var(--body);">${(s.products||[]).join(', ') || '—'}</td>
         <td style="font-weight:600;">${s.amount || '—'}</td>
+        <td><button class="delete-row-btn" onclick="deleteSaleEntry('${s.id}')" title="Delete sale">×</button></td>
       </tr>`).join('')}</tbody>
     </table>
   </div>`;
+}
+
+function deleteSaleEntry(saleId) {
+  if (!saleId) { showToast('Cannot delete — sale has no ID.', true); return; }
+  showConfirm(
+    'Delete this sale?',
+    'This will permanently remove this sale from your log and cannot be undone.',
+    ()=>{
+      sheetsCall({ action: 'delete_sale', email: state.email, sale_id: saleId })
+        .then(() => {
+          state.sales = state.sales.filter(s => s.id !== saleId);
+          renderDashboardData();
+          showToast('Sale deleted');
+        })
+        .catch(err => {
+          console.error('Delete sale error:', err);
+          showToast('Could not delete — please try again.', true);
+        });
+    }
+  );
 }
 
 // ─────────────────────────────────────────────
@@ -2205,7 +2236,7 @@ function validateTrafficEntry(){
       campaign_type:camp.type,
       data:logData
     }).then(result=>{
-      state.dailyLogs.push({id:result.id,date:date,campaignName:camp.name,campaignType:camp.type,...logData});
+      (state.dailyLogs=state.dailyLogs||[]).push({id:result.id,date:date,campaignName:camp.name,campaignType:camp.type,...logData});
     });
   });
 
@@ -2258,7 +2289,7 @@ function validateDtpEntry(){
     campaign_type: 'dtp',
     data: logData
   }).then(result => {
-    state.dailyLogs.push({
+    (state.dailyLogs=state.dailyLogs||[]).push({
       id: result.id,
       date: date,
       campaignName: campName,
